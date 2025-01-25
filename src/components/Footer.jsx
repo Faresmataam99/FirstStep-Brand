@@ -31,7 +31,7 @@ import React, { useState } from 'react';
       <>
           <div className='flex items-center justify-center flex-col border-t'>
           <div className="flex items-center justify-center gap-6 flex-col">
-<img src="blackbag.png" alt="" height={50} width={50} />
+<img src="/blackbag.png" alt="" height={50} width={50} />
             <ul className="flex list-none gap-4 text-xl hover:underline transition-all duration-200 ">
              <Link href= "/findstore"><li>Find a store</li></Link> 
              <Link href= "/assistance"><li>Help</li></Link> 
@@ -82,7 +82,6 @@ import React, { useState } from 'react';
   {/* second part */}
           
         <hr className="w-full m-10" />
-
         <div className="flex flex-row justify-center gap-20 p-6 ">
           <div className="flex  flex-col gap-6">
             <ul className='flex flex-col gap-4'>

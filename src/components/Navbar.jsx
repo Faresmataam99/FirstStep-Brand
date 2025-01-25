@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect,useContext, useState } from "react";
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 // import { Swiper, SwiperSlide } from 'swiper/react';
 // import { Parallax, Pagination, Navigation } from 'swiper/modules';
 
@@ -10,6 +10,7 @@ import {Parallax,Pagination,Navigation} from "swiper/modules"
 
 
 export default function AnimatedPage() {
+
   const [isActive, setIsActive] = useState(false);
   const [Favourites,setFavourites]=useState('');
   const [Cart,setCart]=useState('')
@@ -18,8 +19,8 @@ export default function AnimatedPage() {
     setIsActive(!isActive);
   };
   return (
-    <div className="flex flex-col bg-gray-200 text-sm font-bold relative z-10 border">
 
+    <div className="flex flex-col bg-gray-200 text-sm font-bold relative z-10 border">
       {isActive && (
         <motion.div
           className="fixed inset-0 bg-black opacity-50 z-10"
@@ -49,7 +50,7 @@ export default function AnimatedPage() {
       {/* Main Navigation */}
       <div className="flex items-center justify-between bg-white p-4 ">
         <div className="flex items-center justify-center gap-3">
-        <Link href="/"><img src="blackbag.png" alt="" height={50} width={50} />
+        <Link href="/"><img src="/blackbag.png" alt="" height={50} width={50} />
       </Link>
 <div className="flex flex-col">
 <p className="text-xl font-semibold tracking-widest">Brand <span className="text-orange-600">Zone</span></p>
@@ -60,7 +61,7 @@ export default function AnimatedPage() {
           <Link href="/new">
             <li className="hover:underline hover:underline-offset-1">New</li>
           </Link>
-          <Link href="/">
+          <Link href="/men">
             <li className="hover:underline hover:underline-offset-1">Man</li>
           </Link>
           <Link href="/kids">
@@ -95,13 +96,14 @@ export default function AnimatedPage() {
         </div>
         <div className="flex items-center justify-center gap-2 ">
           <div className="hover:bg-gray-200 transition-all duration-200 hover:rounded-full p-2">
-<Link href="/favourite"><img src="heart.png" alt="favourite" height={20} width={20}/></Link>
+<Link href="/favourite"><img src="/heart.png" alt="favourite" height={20} width={20}/></Link>
           </div>
           <div className="hover:bg-gray-200 transition-all duration-200 hover:rounded-full p-2">
-<Link href="/cart"><img src="bag.png"  alt="bag" height={20} width={20} /></Link>
+<Link href="/cart"><img src="/bag.png"  alt="bag" height={20} width={20} /></Link>
           </div>
           </div>
       </div>
+
     
       {/* Side Panel for Suggestions */}
       <motion.div
@@ -110,7 +112,7 @@ export default function AnimatedPage() {
         animate={isActive ? { x: "0%" } : { x: "100%" }}
         transition={{ duration: 0.4 }}
       >
-        <div className="flex items-center flex-col gap-4  p-6 ">
+        <div className="flex items-center flex-col gap-4 p-6 ">
           <h1 className="text-xl text-gray-700">Most searched items ....</h1>
           <Link href="/airmax90">
             <span className="bg-gray-400 text-lg rounded-full px-3 py-1.5 hover:bg-gray-200 transition-all duration-200">

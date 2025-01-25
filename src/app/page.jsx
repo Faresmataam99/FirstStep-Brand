@@ -29,7 +29,7 @@ export default function Home() {
               alt="Lifestyle"
             />
           </div>
-
+          
           {/* Main Info */}
           <div className="flex items-center justify-center gap-4 flex-col mt-12 mb-12">
             <h1 className="text-6xl font-extrabold">

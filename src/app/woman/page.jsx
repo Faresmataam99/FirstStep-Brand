@@ -110,9 +110,11 @@ export default function WomenPage() {
             </div>
           </div>
         </div>
+
         {/* end of the grid section */}
+        
         <section className="flex items-center justify-center gap-10 m-10">
-          <Link href="">
+          <Link href="/shopping">
             <div className="font-semibold hover:-translate-y-4 transition-all duration-200 flex justify-start flex-col ">
               <img
                 src="./jump.jpg"
@@ -125,7 +127,7 @@ export default function WomenPage() {
             </div>
           </Link>
 
-          <Link href="">
+          <Link href="/shopping">
             <div className="flex justify-start hover:-translate-y-4 transition-all duration-200 flex-col font-semibold ">
               <img
                 src="./modelK.jpg"
@@ -138,13 +140,13 @@ export default function WomenPage() {
             </div>
           </Link>
 
-          <Link href="">
+          <Link href="/shopping">
             <div className="flex font-semibold justify-start flex-col hover:-translate-y-4 transition-all duration-200">
               <img src="./run.jpg" alt="" height={500} width={500} />
               <p className="text-xl">Running gear</p>
             </div>
           </Link>
-          <Link href="">
+          <Link href="/shopping">
             <div className="flex  justify-start font-semibold transition-all duration-200 hover:-translate-y-4 flex-col">
               <img
                 src="./lightsaround.jpg"
@@ -156,9 +158,7 @@ export default function WomenPage() {
               <p className="text-xl">Accessories</p>
             </div>
           </Link>
-          <Link href="">
-            <div></div>
-          </Link>
+          
         </section>
       </div>
     </div>

@@ -24,7 +24,7 @@ const Classics = () => {
     },
     {
       id: 4,
-      src: "https://au.imgix.net/2024/01/WNBA_Partnership_Desktop.jpg?auto=format&fm=pjgp&w=1920&s=8702b9417823e60bcbee3c0983cd3eb4",
+      src: "https://www.sneakerhype.eu/cdn/shop/products/nike-air-max-1-crepe-hemp-2022-sneakerhype-4.jpg?v=1731081305",
       alt: "air max one",
     },
     {
