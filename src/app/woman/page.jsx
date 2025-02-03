@@ -67,32 +67,32 @@ export default function WomenPage() {
         </div>
         <div className="grid grid-cols-2 w-full items-center justify-center">
           {/* First Grid Item */}
-          <div className="relative bg-cover bg-center h-64  ">
+          <div className="relative bg-cover bg-center h-80  ">
               <img src="https://hips.hearstapps.com/hmg-prod/images/run-nike-womens-running-shoes-651da447b2045.jpg" alt="" className="h-full w-full object-cover" />
             <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-30 p-4 text-white">
+              <p className="text-lg font-semibold">Nike Vomero Roam</p>
               <p>For rain or shine</p>
-              <p className=" text-lg">Nike Vomero Roam</p>
               <button className="bg-white rounded-full text-black  font-semibold hover:bg-gray-400 transition-all duraiton-200 px-3 py-1.5">
                 Shop
               </button>
             </div>
           </div>
           {/* Second Grid Item */}
-          <div className="h-64 relative bg-cover bg-center ">
+          <div className="h-80 relative bg-cover bg-center ">
 <img src="homepage.jpg" alt="" className="absolute bg-cover h-full w-full" />
             <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-30 p-4 text-white">
-              <p className="text-center mt-2">Nike pegasus </p>
-              <p className="text-lg">Run in the dark</p>
+              <p className="font-bold text-xl">Nike pegasus </p>
+              <p className="text-lg font-semibold">Run in the dark</p>
               <button className="bg-white rounded-full  text-black hover:bg-gray-400 font-semibold transition-all duration-200 px-3 py-1.5 ">
                 shop
               </button>
             </div>
           </div>
           {/* Third Grid Item */}
-          <div className="h-64 relative bg-cover bg-center">
+          <div className="h-80 relative bg-cover bg-center">
               <img src="https://static.nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/adf3f11e-95e4-4c55-818c-e349d5dbc4b6/women-s-shoes-clothing-accessories.png" alt="" className="w-full h-full object-cover" />
             <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-30 p-4 text-white">
-              <p className="text-lg">Stylish Comfort</p>
+              <p className="text-lg font-semibold">Stylish Comfort</p>
               <p></p>
               <button className="bg-white text-black rounded-full  hover:bg-gray-300 font-semibold transition-all duration-200 px-3 py-1.5">
                 Shop
@@ -100,10 +100,10 @@ export default function WomenPage() {
             </div>
           </div>
           {/* Fourth Grid Item */}
-          <div className="h-64 relative bg-cover bg-center">
+          <div className="h-80 relative bg-cover bg-center">
             <img src="https://static.nike.com/a/images/t_PDP_936_v1/f_auto,q_auto:eco/bb362451-47b0-4432-821f-005cccc841dd/W+NIKE+V2K+RUN.png" alt="" className="bg-cover w-full h-full object-cover" />
             <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-30 p-4 text-white">
-              <p className="text-lg">Performance Ready</p>
+              <p className="text-lg font-semibold">Performance Ready</p>
               <button className="bg-white rounded-full text-black font-semibold px-4 py-1.5 hover:bg-gray-300 transition-all duration-200">
                 Shop
               </button>

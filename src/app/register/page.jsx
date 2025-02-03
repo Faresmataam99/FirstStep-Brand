@@ -5,59 +5,36 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { Spline_Sans_Mono } from "next/font/google";
 
 export default () => {
   const [firstname,setfirstname]=useState('')
   const [lastname,setlastname]=useState('')
-  const [age,setage]=useState('')
+  const [birthdate,setbirthdate]=useState('')
   const [country,setcountry]=useState('')
-  const [placeofliving,setplaceofliving]=useState('')
-  const router = useRouter();
-
   const [email,setemail] = useState("");
   const [password,setpassword]=useState('')
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://localhost:5174/register", {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
-        setUser(response.data);
-      } catch (err) {
-        console.error("Error fetching user data:", err.message);
-      }
-    };
 
-    // Check if user is already logged in
-    const token = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
-    if (token && storedUser) {
-      setIsLoggedIn(true);
-      setLoggedInUser(JSON.parse(storedUser).firstname);
-    }
-
-    fetchData();
-  }, []);
+  const router = useRouter();
 
   const submit = async (e) => {
+
     e.preventDefault();
+
     try {
       const response = await axios.post(
-        "http://localhost:8000/login", // Corrected URL
-        loginData
+        "http://localhost:5000/register",{
+        email,
+        password,
+        firstname,
+        lastname,
+        birthdate,
+        country,
+        } 
       );
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("user", JSON.stringify(User)); // Store user info
-      setIsLoggedIn(true);
-      setLoggedInUser(User.firstname);
-      alert("Login successfully");
-      router.push("/"); // Redirect to homepage
+      router.push("/"); 
     } catch (err) {
       console.error("Login error:", err.message);
-      alert("Failed to login. Please check your credentials.");
     }
   };
   
@@ -106,25 +83,16 @@ export default () => {
               required
             />
             <input
-              onChange={(e)=>setage(e.target.value)}
-              value={age}
-              className="p-2 text-lg rounded-full hover:bg-gray-200 transition-all duration-200 w-96"
-              type="number"
-              id="age"
-              name="age"
-              placeholder="Enter your age..."
-              required
-            />
-            <input
-              onChange={(e)=>setplaceofliving(e.target.value)}
-              value={placeofliving}
+              onChange={(e)=>setbirthdate(e.target.value)}
+              value={birthdate}
               className="p-2 text-lg rounded-full hover:bg-gray-200 transition-all duration-200 w-96"
               type="text"
-              id="placeofliving"
-              name="placeofliving"
-              placeholder="Place of Living..."
+              id="text"
+              name="text"
+              placeholder=""
               required
             />
+            
             <input
               onChange={(e)=>setemail(e.target.value)}
               value={email}
@@ -167,14 +135,12 @@ export default () => {
             <p className="text-3xl font-semibold">
               Become part of the family, discover, become up to date <br /> and
               take advantage of many offers and discounts <br />
-              <div className="flex items-center justify-center gap-3">
-                <a href="/">
-                  <span className="text-orange-500 hover:underline transition-all duration-200 font-bold">
+              <span className="flex items-center justify-center gap-3">
+                <a href="/" className="text-orange-500 hover:underline transition-all duration-200 font-bold">
                     at Nike.com
-                  </span>
                 </a>
                 <img src="./nike.png" height={40} width={40} alt="" />
-              </div>
+              </span>
             </p>
         </motion.div>
       </div>

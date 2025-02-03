@@ -2,17 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 
 
 export default () => {
-  const router = useRouter();
   const [email, setemail] = useState("");
   const [password, setpassword] = useState("");
+
+  const dispatch =useDispatch()
+  const router = useRouter();
 
   const submit = async (e) => {
     e.preventdefault();
     try {
-      const response = await axios.post("https:localhost:8000/login", {
+      const response = await axios.post("https:localhost:5000/login", {
         email,
         password,
       });
@@ -32,16 +35,18 @@ export default () => {
             <input
               type="email"
               id="name"
+              value={email}
               className="w-96 p-2 text-lg hover:bg-gray-200 transition-all duration-200"
               onChange={(e)=>setemail(e.target.value)}
             />
             <input
               type="password"
               id="password"
+              value={password}
               className="w-96 p-2 text-lg hover:bg-gray-200 transition-all duration-200"
               onChange={(e)=>setpassword(e.target.value)}
             />
-            <button className="px-3 py-1.5 bg-black hover:bg-gray-700 transition-all duration-200 text-white font-semibold">Log in</button>
+            <button onClick={submit} className="px-3 py-1.5 bg-black hover:bg-gray-700 transition-all duration-200 text-white font-semibold">Log in</button>
           </form>
         </div>
       </div>

@@ -107,7 +107,7 @@ export default function Home() {
         </div>
         {/* cards sections */}
 <section className="flex  mt-20 mb-5 gap-6 mx-5 ">
-  <div className="flex  justify-center rounded-lg border bg-orange-200  max-h-full gap-20">
+  <div className="flex  justify-center rounded-lg border bg-orange-200 max-h-full gap-20">
     <div className="flex flex-col gap-10 hover:shadow-lg transition-all duration-200 justify-between p-2">
     <p className="text-7xl font-semibold">Your style delivered <br />
     exclusively <br /> online</p>

@@ -2,29 +2,43 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 export default ({ itemsFromOtherPages = [] }) => {
-  const [activeItem, setActiveItem] = useState(itemsFromOtherPages); // Receives items selected by the user
-  const [promo, setPromo] = useState(""); // Tracks promo code entered by the user
+  const [activeItem, setActiveItem] = useState(itemsFromOtherPages); 
+  const [promo, setPromo] = useState(""); 
   const [total, setTotal] = useState(0);
 
+
+  const isConnected = useSelector(state=>state.userisConnected)
+  const user = useSelector(state=>state.user.user)
+  if(!isConnected || user.type !='admin'){
+    <div className="rounded-lg bg-orange-500 text-center p-4 ">
+<h1 className="text-white font-bold">Our apologies but we are reviewing your validations <br /> for the moment, take a look once in while, <br /> thank you for your understanding and patience </h1>
+    </div>
+  
   useEffect(() => {
     const newTotal = activeItem.reduce((acc, item) => acc + item.price, 0);
     setTotal(newTotal);
-  }, [activeItem]); //
+  }, [activeItem]); 
+
+  const OrderOrganizing = ()=>{
+  useEffect(()=>{
+    axios.get()
+  })
+  }
 
   const promoCode = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/products");
-
+      const response = await axios.post("http://localhost:5000/user");
       console.log("Promo code applied successfully:", response.data);
     } catch (error) {
       alert("Not the selected product, check again");
       console.error(error);
     }
   };
-
+}
   return (
     <>
       <div className="flex gap-4 flex-col">
@@ -34,10 +48,13 @@ export default ({ itemsFromOtherPages = [] }) => {
             <p className="text-2xl font-semibold">Bag</p>
             {activeItem.length === 0 ? (
               <Link href="/new">
-                {" "}
                 <button className="bg-black relative rounded-lg text-white px-4 py-1.5 hover:bg-orange-600 transition-all duration-200 ">
                   No items in the bag yet
                 </button>
+                <div className="flex items-center flex-col">
+                  <h1></h1>
+
+                </div>
               </Link>
             ) : (
               <ul>
@@ -48,9 +65,11 @@ export default ({ itemsFromOtherPages = [] }) => {
                 <p className="text-light text-md">{item.price} DZD</p>
               </ul>
             )}
+            
             <span className="text-white text-lg absolute left-4 top-1/2 transform -translate-y-1/2 duration-300 ease-in-out group-hover:left-[90%]  ">
               →
             </span>
+
           </div>
           {/* Checkout Section */}
           <div className="flex flex-col gap-4">
@@ -64,9 +83,10 @@ export default ({ itemsFromOtherPages = [] }) => {
               exit={{ x: "100%" }}
               transition={{ duration: 0.5 }}
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex gap-4 items-center justify-center w-full">
+                <h1>Promo code</h1>
                 <form method="post">
-                  <label htmlFor="promoCode">Promo Code</label>
+                  <label htmlFor="promoCode"></label>
                   <input
                     value={promo}
                     onChange={(e) => setPromo(e.target.value)}

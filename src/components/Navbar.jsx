@@ -1,25 +1,43 @@
 "use client";
 import Link from "next/link";
-import { useEffect,useContext, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import { color, motion } from "framer-motion";
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import { Parallax, Pagination, Navigation } from 'swiper/modules';
-
-import {Swiper,SwiperSlide} from "swiper/react";
-import {Parallax,Pagination,Navigation} from "swiper/modules"
-
+import { useDispatch, useSelector } from "react-redux";
 
 export default function AnimatedPage() {
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios
+        .get("https:localhost:5000/login", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((response) => {
+          dispatch(loginAction(response.data));
+        });
+    }
+  }, []);
+  const dispatch = useDispatch();
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    dispatch(logoutAction);
+  };
+
+  const isConnected = useSelector((state) => state.user.isConnected);
 
   const [isActive, setIsActive] = useState(false);
-  const [Favourites,setFavourites]=useState('');
-  const [Cart,setCart]=useState('')
+  const [Favourites, setFavourites] = useState("");
+  const [Cart, setCart] = useState("");
 
   const toggleActive = () => {
     setIsActive(!isActive);
   };
-  return (
 
+  return (
+    <>
     <div className="flex flex-col bg-gray-200 text-sm font-bold relative z-10 border">
       {isActive && (
         <motion.div
@@ -29,8 +47,7 @@ export default function AnimatedPage() {
       )}
       {/* Top Navigation */}
       <div className="flex items-center justify-between p-2">
-        <Link href="/brands">
-      </Link>
+        <Link href="/brands"></Link>
         <ul className="flex flex-row gap-6">
           <Link href="/findastore">
             <li>Find a store</li>
@@ -50,12 +67,15 @@ export default function AnimatedPage() {
       {/* Main Navigation */}
       <div className="flex items-center justify-between bg-white p-4 ">
         <div className="flex items-center justify-center gap-3">
-        <Link href="/"><img src="/blackbag.png" alt="" height={50} width={50} />
-      </Link>
-<div className="flex flex-col">
-<p className="text-xl font-semibold tracking-widest">Brand <span className="text-orange-600">Zone</span></p>
-<p className=" font-light">Home of the athletic lifestyle</p>
-</div>
+          <Link href="/">
+            <img src="/bagbrand.png" alt="" height={50} width={50} />
+          </Link>
+          <div className="flex flex-col">
+            <p className="text-xl font-semibold tracking-widest">
+              Brand <span className="text-orange-600">Zone</span>
+            </p>
+            <p className=" font-light">Home of the athletic lifestyle</p>
+          </div>
         </div>
         <ul className="flex flex-row list-none font-semibold gap-8 text-lg">
           <Link href="/new">
@@ -80,7 +100,6 @@ export default function AnimatedPage() {
 
         {/* Search Bar */}
         <div className="relative flex items-center gap-24">
-         
           <motion.div
             className="flex items-center bg-gray-200 hover:bg-gray-100 p-1.5 rounded-full"
             onClick={() => setIsActive(true)}
@@ -96,15 +115,19 @@ export default function AnimatedPage() {
         </div>
         <div className="flex items-center justify-center gap-2 ">
           <div className="hover:bg-gray-200 transition-all duration-200 hover:rounded-full p-2">
-<Link href="/favourite"><img src="/heart.png" alt="favourite" height={20} width={20}/></Link>
+            <Link href="/favourite">
+              <img src="/heart.png" alt="favourite" height={20} width={20} />
+            </Link>
           </div>
           <div className="hover:bg-gray-200 transition-all duration-200 hover:rounded-full p-2">
-<Link href="/cart"><img src="/bag.png"  alt="bag" height={20} width={20} /></Link>
+            <Link href="/cart">
+              <img src="/bag.png" alt="bag" height={20} width={20} />
+            </Link>
           </div>
-          </div>
+        </div>
       </div>
+      
 
-    
       {/* Side Panel for Suggestions */}
       <motion.div
         className="fixed top-0 right-0 h-full bg-white shadow-lg z-20"
@@ -137,5 +160,7 @@ export default function AnimatedPage() {
         </div>
       </motion.div>
     </div>
+     </>
+   
   );
 }

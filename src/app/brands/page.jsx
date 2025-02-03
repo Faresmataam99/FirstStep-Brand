@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 export default () => {
   // const [bgColor, setBgColor] = useState("#ffffff"); 
@@ -22,12 +23,13 @@ export default () => {
         transition={{ duration: 0.3 }}
       />
       <div className="grid grid-cols-3 gap-6  items-center justify-center p-10">
-        <div
+      <Link href={"adidas"}>
+       <div
           onMouseOver={() => handleHover("#EEF4FC")} 
           className="border hover:scale-110 transition-all duration-200"
         >
           <img src="./adidasbrand.jpg" alt="Adidas" />
-        </div>
+        </div></Link> 
         <div
           onMouseOver={() => handleHover("#8c454b")} 
           className="border hover:scale-110 transition-all duration-200"
