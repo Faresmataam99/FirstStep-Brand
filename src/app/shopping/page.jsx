@@ -11,9 +11,9 @@ export default () => {
     <div className="max-w-screen-xl m-auto px-4">
         <ShopNav/>
       <div className="flex justify-between gap-6 ">
-        <Filter />
+        <Filter/>
         <div className="flex-grow ">
-        <Shopping />
+        <Shopping/>
         </div>
       </div>
     </div>

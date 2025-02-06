@@ -33,7 +33,7 @@ export const Adds = () => {
         <SwiperSlide>
           <Link href={"/register"}>
             <h1 className="hover:underline text-sm text-center font-semibold">
-              Get a Nike Gift Card
+              Get a BrandZone Gift Card
             </h1>
           </Link>
         </SwiperSlide>

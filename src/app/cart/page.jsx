@@ -2,32 +2,31 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { removeFromCart, setProducts } from "@/lib/store/cartSlice";
+import { emptyCart } from "@/lib/store/cartSlice";
+import { reduceQuantity } from "@/lib/store/cartSlice";
+import axios from "axios";
 
-export default ({ itemsFromOtherPages = [] }) => {
-  const [activeItem, setActiveItem] = useState(itemsFromOtherPages); 
-  const [promo, setPromo] = useState(""); 
-  const [total, setTotal] = useState(0);
+export default ()=> {
+  const [promo, setPromo] = useState("");
+  const [stock,setStock]=useState('');
+
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.cart.products);
+
+  const isConnected = useSelector((state) => state.user.isConnected);
+  const user = useSelector((state) => state.user?.user);
 
 
-  const isConnected = useSelector(state=>state.userisConnected)
-  const user = useSelector(state=>state.user.user)
-  if(!isConnected || user.type !='admin'){
-    <div className="rounded-lg bg-orange-500 text-center p-4 ">
-<h1 className="text-white font-bold">Our apologies but we are reviewing your validations <br /> for the moment, take a look once in while, <br /> thank you for your understanding and patience </h1>
-    </div>
-  
-  useEffect(() => {
-    const newTotal = activeItem.reduce((acc, item) => acc + item.price, 0);
-    setTotal(newTotal);
-  }, [activeItem]); 
+    const TotalPrice = products.reduce((old, item) => old +=(item.price * products.stock),0 );
 
-  const OrderOrganizing = ()=>{
-  useEffect(()=>{
-    axios.get()
-  })
+useEffect(()=>{
+  const products = localStorage.getItem('products')
+  if(products){
+    dispatch(setProducts(JSON.parse(products)))
   }
-
+},[])
   const promoCode = async (e) => {
     e.preventDefault();
     try {
@@ -38,44 +37,51 @@ export default ({ itemsFromOtherPages = [] }) => {
       console.error(error);
     }
   };
-}
+
   return (
     <>
       <div className="flex gap-4 flex-col">
-        <div className="flex  justify-between flex-row p-2 w-full ">
+        <div className="flex justify-between flex-row p-2 w-full">
           {/* Bag Panel */}
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-semibold">Bag</p>
-            {activeItem.length === 0 ? (
+            {products.length === 0 ? (
               <Link href="/new">
-                <button className="bg-black relative rounded-lg text-white px-4 py-1.5 hover:bg-orange-600 transition-all duration-200 ">
+                <button className="bg-black relative rounded-lg text-white px-4 py-1.5 hover:bg-orange-600 transition-all duration-200">
                   No items in the bag yet
                 </button>
-                <div className="flex items-center flex-col">
-                  <h1></h1>
-
-                </div>
               </Link>
             ) : (
-              <ul>
-                <img src={product.image} alt="" />
-                {activeItem.map((item, index) => (
-                  <li key={index}>{item.name}</li>
+              <div className="flex items-center gap-4 p-5 ">
+              <ul  className="border rounded-lg gap-3">
+                {products.map((product,index) => (
+                  <li key={product.product.id} className="flex items-center gap-4 border-b pb-4">
+                    <img src={product.product.image} className="w-[100px] object-cover rounded-lg" />
+                    <div className="flex flex-col gap-2">
+                      <h2 className="text-xl font-semibold">{product.product.title}</h2>
+                      <h3 className="text-lg font-light">{product.product.price} DZD</h3>
+                      <h3 className="font-semibold">Size: {product.product.sizes} </h3>
+                      <h4> {product.product.stock} </h4>
+                      <button
+                        onClick={() => dispatch(removeFromCart(index))}
+                        className="rounded-lg w-fit px-4 py-1.5 bg-red-500 text-white hover:bg-red-400">
+                        Remove item
+                      </button>
+                      <button onClick={()=>dispatch(reduceQuantity())} className="bg-black w-fit rounded-lg text-white hover:bg-gray-700 transition-all duration-200"> Reduce quantity </button>
+                    </div>
+                  </li>
                 ))}
-                <p className="text-light text-md">{item.price} DZD</p>
               </ul>
+              </div>
             )}
-            
-            <span className="text-white text-lg absolute left-4 top-1/2 transform -translate-y-1/2 duration-300 ease-in-out group-hover:left-[90%]  ">
-              →
-            </span>
-
+             <div className="flex jusitfy-end">
+          <button onClick={()=>dispatch(emptyCart)} className="bg-black h-fit rounded-lg font-light text-white px-4 py-1.5 hover:bg-gray-700 hover:shadow-lg transition-all duration-200">Empty cart</button>
+          </div>
           </div>
           {/* Checkout Section */}
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-semibold">Summary</p>
-            <p>Do you have a promo code ?</p>
-
+            <p>Do you have a promo code?</p>
             <motion.div
               className="flex flex-col gap-4 bg-white p-4"
               initial={{ x: "-100%" }}
@@ -85,8 +91,7 @@ export default ({ itemsFromOtherPages = [] }) => {
             >
               <div className="flex gap-4 items-center justify-center w-full">
                 <h1>Promo code</h1>
-                <form method="post">
-                  <label htmlFor="promoCode"></label>
+                <form method="post" onSubmit={promoCode}>
                   <input
                     value={promo}
                     onChange={(e) => setPromo(e.target.value)}
@@ -99,57 +104,53 @@ export default ({ itemsFromOtherPages = [] }) => {
                 </form>
               </div>
             </motion.div>
-
             <div className="flex items-center justify-between">
               <p>Estimated shipping & handling</p>
               <p>Free</p>
             </div>
-            <p>Subtotal</p>
-            <p>Estimated tax</p>
             <hr className="w-full" />
             <div className="flex items-center justify-between">
               <p>Total</p>
-              <span>{total} DZD</span>
+              <span>{TotalPrice} DZD</span>
+            </div>
+            <hr className="w-full" />
+            <div className="justify-between w-full flex items-center">
+            <p>Estimated tax</p>
             </div>
             <hr className="w-full" />
             <p>Members get free shipping on orders 15000 DZD+</p>
-            <div className="flex items-center gap-3">
-              <a className="underline text-gray-500" href="/register">
-                <p>Join us</p>
-              </a>
-              <p>or</p>
-              <a className="underline text-gray-500" href="/login">
-                {" "}
-                <p>Sign-in</p>
-              </a>
-            </div>
-            <button
+            <hr className="w-full"/>
+            <div className="flex items-center gap-4  ">
+<Link href={"login"}> <p className="text-gray-400 hover:undelrine">Join us</p> </Link>
+<p>or</p>
+<Link href={"register"}><p className="text-gray-400 hover:underline">Sign-in</p></Link>
+        </div>
+           <Link href={"/orders"}> <button
               onClick={() => alert("Checkout process started")}
               className="rounded-full p-3 w-full bg-gray-200"
-              disabled
+              disabled={products.length === 0}
             >
               Checkout
-            </button>
+            </button></Link>
+           
           </div>
         </div>
-        <div className="flex gap-4 flex-col m-3">
-          <p className="text-2xl font-semibold">Favourites</p>
-          <div className="flex flex-row gap-3">
-            <p>want to see your favourites ? </p>
-            <div className="flex items-center justify-center gap-3">
-              <a href="/register" className="underline text-gray-500">
-                {" "}
-                <p>Sign-in</p>
-              </a>
-              <p>or</p>
-              <a href="/login" className="text-gray-500 underline">
-                {" "}
-                <p>Join-us</p>
-              </a>
-            </div>
+      </div>
+      <div className="flex gap-4 flex-col m-3">
+        <p className="text-2xl font-semibold">Favourites</p>
+        <div className="flex flex-row gap-3">
+          <p>Want to see your favourites?</p>
+          <div className="flex items-center justify-center gap-3">
+            <a href="/register" className="underline text-gray-500">
+              Sign-in
+            </a>
+            <p>or</p>
+            <a href="/login" className="text-gray-500 underline">
+              Join-us
+            </a>
           </div>
         </div>
       </div>
     </>
   );
-};
+}

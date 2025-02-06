@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation"; 
+import { addToCart } from "@/lib/store/cartSlice";
 
 const Shopping = () => {
   const [products, setProducts] = useState([]);
@@ -11,8 +12,8 @@ const Shopping = () => {
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
 
+
   const isConnected = useSelector((state) => state.user.isConnected);
-  
   const router = useRouter(); 
 
   useEffect(() => {
@@ -27,33 +28,35 @@ const Shopping = () => {
     fetchProducts();
   }, []);
 
-  const handleViewDetails = (productId) => {
-    router.push(`/shopping/${productId}`);
-  };
+  // const handleViewDetails = (productId) => {
+  //   router.push(`/shopping/${productId}`);
+  // };
 
 
   return (
     <>
       <div className="grid grid-cols-3 gap-4">
+
         {products.map((product) => (
           <Link href={`/shopping/${product.id}`} key={product.id}> 
-            <div className="border p-4 hover:-translate-y-3 transition-all duration-200">
+
+        
+            <div className="border hover:-translate-y-3 transition-all duration-200 ">
               <img
                 src={product.image}
-                alt={product.title}
-                className="h-72"
+                className="w-full"
               />
-              <div className="flex flex-col">
-                <div className="flex justify-between">
-                  <p className="font-semibold">{product.title}</p>
+              <div className="flex flex-col gap-3 p-3">
+                <div className="flex justify-between ">
+                  <p className="font-semibold text-lg">{product.title}</p>
                   <span className="font-semibold text-green-400">
                     {product.stock}
                   </span>
                 </div>
-                <span className="font-light">
-                  {product.price} <span>£</span>
+                <span className="font-light text-lg">
+                  {product.price} <span>DZD</span>
                 </span>
-                <button className="mt-2 w-fit justify-end px-3 py-1.5 rounded-full bg-black text-white font-semibold hover:bg-gray-600 transition-all duration-200">
+                <button onClick={()=>dispatch(addToCart)} className=" w-fit  px-3 py-1.5 rounded-full bg-black text-white font-semibold hover:bg-gray-600 transition-all duration-200">
                   Add to cart
                 </button>
               </div>

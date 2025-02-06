@@ -32,6 +32,8 @@ export default function AnimatedPage() {
   const [Favourites, setFavourites] = useState("");
   const [Cart, setCart] = useState("");
 
+  const cartCount = useSelector((state)=>state.counter)
+
   const toggleActive = () => {
     setIsActive(!isActive);
   };
@@ -119,11 +121,19 @@ export default function AnimatedPage() {
               <img src="/heart.png" alt="favourite" height={20} width={20} />
             </Link>
           </div>
+          {/* the bag and the number of the selected items */}
           <div className="hover:bg-gray-200 transition-all duration-200 hover:rounded-full p-2">
             <Link href="/cart">
               <img src="/bag.png" alt="bag" height={20} width={20} />
+              {cartCount > 0 &&(
+                <span className="rounded-full text-sm bg-orange-500 text-white">
+                  {cartCount}
+                </span>
+              )
+              }
             </Link>
           </div>
+          {/*  */}
         </div>
       </div>
       
@@ -161,6 +171,5 @@ export default function AnimatedPage() {
       </motion.div>
     </div>
      </>
-   
   );
 }

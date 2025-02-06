@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import Shopping from "@/components/Shopping";
 
 export default function FilterMenu() {
   const [showFilter, setShowfilter] = useState(true);
@@ -127,6 +128,9 @@ export default function FilterMenu() {
             </ul>
           </motion.div>
         )}
+      </div>
+      <div>
+        <Shopping/>
       </div>
     </>
   );
