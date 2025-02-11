@@ -20,13 +20,16 @@ export default ()=>{
           sortDirection : sort.sortDirection,
           sortBy : sort.sortBy
         }
-      }).then ((response)=>setproducts(response.data))
+      }).then ((response)=>setCategory(response.data.category))
     }
   
+    
     useEffect(()=>{
       axios.get('http://localhost:5000/products')
       .then((response)=>setProducts(response.data))
     },[])
+
+
 return(
     <>
      <div className="flex flex-col gap-3">
@@ -50,7 +53,7 @@ return(
             </select>
             <button className="bg-black text-white px-4 py-2 rounded-full" onClick={filter}>  Search  </button> 
             {
-              isConnected && <span className="bg-orange-500 rounded-lg hover:bg-orange-300"> Admin </span>
+              isConnected && <span className="bg-orange-500 px-3 py-1.5 rounded-lg hover:bg-orange-300 text-white"> Admin </span>
             }
           </div>
         </div>

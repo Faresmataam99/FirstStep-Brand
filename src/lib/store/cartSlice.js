@@ -9,7 +9,8 @@ export const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const index = state.products.findIndex(
-        (product) => product.product.id == action.payload.id
+        (product) => product.product.id == action.payload.id,
+        (product) =>product.product.size == action.payload.id,
       );
       if (index != -1) {
         state.products[index].stock++;
@@ -19,7 +20,7 @@ export const cartSlice = createSlice({
           stock: 1,
         });
       }
-      updateLocalStorage(state.products)
+      updateLocalStorage(state.products);
     },
 
     removeFromCart: (state, action) => {
@@ -39,6 +40,21 @@ export const cartSlice = createSlice({
     validOrder: (state, action) => {
       if (state.products[action.payload]);
     },
+    addTowishList: (state, action) => {
+      const index = state.products.findIndex(
+        (product) => product.product.id === action.payload.id,
+        state.products.push({
+          product: action.payload,
+          stock: 1,
+        })
+      );
+      updateLocalStorage(state.products);
+    },
+
+    cartCount: (state, action) => {
+      updateLocalStorage(state.products);
+    },
+
     setProducts: (state, action) => {
       state.products = action.payload;
     },

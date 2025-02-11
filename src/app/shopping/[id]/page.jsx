@@ -14,6 +14,7 @@ export default () => {
 
   const [selectedImage, setSelectedImage] = useState([]);
   const [product, setproducts] = useState([]);
+  const [size,setSize]=useState('')
   const params = useParams();
 
   useEffect(() => {
@@ -28,11 +29,16 @@ export default () => {
     setSelectedImage(product.image);
   };
 
+const slsectSize = ()=>{
+  setSize=(i.target)
+  console.log(i.target)
+}
+
 
   return (
     <>
       <div className="grid grid-cols-2 gap-2 items-center p-20">
-        <div className="grid grid-cols-2 gap-2 flex-grow">
+        <div className="grid grid-cols-2 gap-2 flex-grow ">
           {/* ounmouse images panel */}
           {/* <div className="flex gap-2 flex-col col-span-2">
 
@@ -50,7 +56,8 @@ export default () => {
             <img src={product.image} alt="" />
           </div>
         </div>
-        <div className="flex flex-col  sticky top-0 right-0 max-w-screen-lg m-auto ">
+        {/* second panel */}
+        <div className="flex flex-col  sticky top-0 right-0  m-auto ">
           <div className="flex flex-col gap-3">
             <h1 className="text-2xl font-semibold">{product.title}</h1>
             <h1 className="text-lg font-light "> {product.category} </h1>
@@ -64,18 +71,15 @@ export default () => {
             <div className="flex items-center gap-4 ">
             <ul className="flex items-center gap-4">
                 {product.sizes?.map((size,index) => (
-                  <li key={index} className="border rounded-lg p-3 hover:bg-gray-200 duration-200 transition-all">
+                  <li  key={index} className="border rounded-lg p-3 hover:bg-gray-200 duration-200 transition-all">
                     {size}
                   </li>
                 ))}
               </ul>
             </div>
           </div>
-
           <div className="flex items-center justify-center flex-col mt-5">
-
           <div className="flex items-center justify-center gap-2 flex-col">
-
               <button
                 onClick={() => dispatch(addToCart(product))}
                 className="rounded-full  px-7 py-4 bg-black text-white w-full hover:bg-gray-200 transition-all duration-200"

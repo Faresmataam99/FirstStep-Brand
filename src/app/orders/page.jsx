@@ -16,7 +16,6 @@ export default  () => {
 const router = useRouter();
     const products = useSelector(state => state.cart.products);
 
-    
     const submit = async (e) => {
         e.preventDefault();
         try {
@@ -71,9 +70,9 @@ const router = useRouter();
                 >
                     Confirm
                 </button>
-
             </form>
         </div>
+
     );
 };
 

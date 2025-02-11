@@ -14,12 +14,10 @@ export default ()=> {
 
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cart.products);
-
-  const isConnected = useSelector((state) => state.user.isConnected);
+  const isAuth = useSelector((state) => state.user.isAuth);
   const user = useSelector((state) => state.user?.user);
+  const TotalPrice = products.reduce((old, item) => old +=(item.price * products.stock),0 );
 
-
-    const TotalPrice = products.reduce((old, item) => old +=(item.price * products.stock),0 );
 
 useEffect(()=>{
   const products = localStorage.getItem('products')
@@ -27,6 +25,7 @@ useEffect(()=>{
     dispatch(setProducts(JSON.parse(products)))
   }
 },[])
+
   const promoCode = async (e) => {
     e.preventDefault();
     try {
@@ -41,7 +40,7 @@ useEffect(()=>{
   return (
     <>
       <div className="flex gap-4 flex-col">
-        <div className="flex justify-between flex-row p-2 w-full">
+        <div className="flex justify-between items-center p-2 w-full">
           {/* Bag Panel */}
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-semibold">Bag</p>
@@ -52,10 +51,10 @@ useEffect(()=>{
                 </button>
               </Link>
             ) : (
-              <div className="flex items-center gap-4 p-5 ">
-              <ul  className="border rounded-lg gap-3">
+              <div className="flex items-center justify-center gap-4 p-5 max-w-screen-lg ">
+              <ul  className="flex items-center gap-3">
                 {products.map((product,index) => (
-                  <li key={product.product.id} className="flex items-center gap-4 border-b pb-4">
+                <Link href={`/shopping/${product.product.id}`}key={product.product.id}><li key={product.product.id} className="flex items-center gap-4 border">
                     <img src={product.product.image} className="w-[100px] object-cover rounded-lg" />
                     <div className="flex flex-col gap-2">
                       <h2 className="text-xl font-semibold">{product.product.title}</h2>
@@ -67,15 +66,15 @@ useEffect(()=>{
                         className="rounded-lg w-fit px-4 py-1.5 bg-red-500 text-white hover:bg-red-400">
                         Remove item
                       </button>
-                      <button onClick={()=>dispatch(reduceQuantity())} className="bg-black w-fit rounded-lg text-white hover:bg-gray-700 transition-all duration-200"> Reduce quantity </button>
+                      <button onClick={()=>dispatch(setProducts(index))} className="bg-black w-fit rounded-lg text-white px-3 py-1.5 hover:bg-gray-700 transition-all duration-200">Quantity</button>
                     </div>
-                  </li>
+                  </li></Link>
                 ))}
               </ul>
               </div>
             )}
              <div className="flex jusitfy-end">
-          <button onClick={()=>dispatch(emptyCart)} className="bg-black h-fit rounded-lg font-light text-white px-4 py-1.5 hover:bg-gray-700 hover:shadow-lg transition-all duration-200">Empty cart</button>
+          <button onClick={()=>dispatch(emptyCart(index))} className="bg-black h-fit rounded-lg font-light text-white px-4 py-1.5 hover:bg-gray-700 hover:shadow-lg transition-all duration-200">Empty cart</button>
           </div>
           </div>
           {/* Checkout Section */}

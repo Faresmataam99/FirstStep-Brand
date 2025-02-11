@@ -1,17 +1,18 @@
 "use client";
 
+import axios from "axios";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+
 
 export default function WomenPage() {
   const [women, setWomen] = useState([]);
   const [input, setInput] = useState("");
 
-  // Uncomment and update when API is ready
-  // useEffect(() => {
-  //   axios.get('https://localhost:8000/women')
-  //     .then((response) => setWomen(response.data.json));
-  // }, []);
+ useEffect(() => {
+   axios.get('https://localhost:5000/products')
+     .then((response) => setWomen(response.data.json));
+ }, []);
 
   return (
     <div className="flex items-center flex-col">

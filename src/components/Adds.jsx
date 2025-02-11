@@ -28,7 +28,6 @@ export const Adds = () => {
             </h1>
           </Link>
         </SwiperSlide>
-
         {/* Second Slide */}
         <SwiperSlide>
           <Link href={"/register"}>

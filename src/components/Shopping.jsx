@@ -32,15 +32,11 @@ const Shopping = () => {
   //   router.push(`/shopping/${productId}`);
   // };
 
-
   return (
     <>
-      <div className="grid grid-cols-3 gap-4">
-
+      <div className="grid grid-cols-3 gap-4 mt-4">
         {products.map((product) => (
           <Link href={`/shopping/${product.id}`} key={product.id}> 
-
-        
             <div className="border hover:-translate-y-3 transition-all duration-200 ">
               <img
                 src={product.image}

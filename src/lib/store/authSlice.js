@@ -1,47 +1,27 @@
-import {creatSlice} from "@reduxjs/toolkit"
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null,
-  isAuth: false,
-  loading: false,
+  isConnected: false,
 };
-const authSlice = creatSlice({
-  name: "auth",
+const authSlice = createSlice({
+  name: "connected",
   initialState,
   reducers: {
-    loginStart: (state) => {
-      state.loading = true;
-    },
-    loginsSuccess: (state, action) => {
-      state.loading = false;
+    loginAction: (state, action) => {
+      state.isConnected = true;
       state.user = action.payload;
-      state.isAuth = true;
     },
-    loginFail: (state) => {
-      state.loading = false;
-      state.isAuth = false;
-    },
-    registerStart: (state) => {
-      state.loading = true;
-    },
-    registerSuccess: (state, action) => {
-      state.loading = false;
-      state.user = action.payload;
-      state.isAuth = true;
-    },
-    registerFail: (state) => {
-      state.loading = false;
-      state.isAuth = false;
+  
+    logoutAction: (state) => {
+      state.user = {};
+      state.isConnected = false;
     },
   },
 });
 
-//Actions
-export const  {
-    loginStart,
-    loginsSuccess,
-    loginFail,
-    registerFail,
-    registerStart,
-    registerSuccess
-} = authSlice.action
+export const {
+  loginAction,
+  logoutAction,
+  
+} = authSlice.actions;
