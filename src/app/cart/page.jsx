@@ -3,20 +3,18 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
+import {user} from "@/lib/store/userSlice"
 import { removeFromCart, setProducts } from "@/lib/store/cartSlice";
 import { emptyCart } from "@/lib/store/cartSlice";
-import { reduceQuantity } from "@/lib/store/cartSlice";
 import axios from "axios";
 
 export default ()=> {
   const [promo, setPromo] = useState("");
-  const [stock,setStock]=useState('');
-
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cart.products);
-  const isAuth = useSelector((state) => state.user.isAuth);
+  const isConnected = useSelector((state) => state.user.isConnected);
   const user = useSelector((state) => state.user?.user);
-  const TotalPrice = products.reduce((old, item) => old +=(item.price * products.stock),0 );
+  const TotalPrice = products.reduce((old, item) => old +=(item.price * products.quantity),0 );
 
 
 useEffect(()=>{
@@ -29,7 +27,7 @@ useEffect(()=>{
   const promoCode = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/user");
+      const response = await axios.post("http://localhost:5000/users");
       console.log("Promo code applied successfully:", response.data);
     } catch (error) {
       alert("Not the selected product, check again");
@@ -60,13 +58,11 @@ useEffect(()=>{
                       <h2 className="text-xl font-semibold">{product.product.title}</h2>
                       <h3 className="text-lg font-light">{product.product.price} DZD</h3>
                       <h3 className="font-semibold">Size: {product.product.sizes} </h3>
-                      <h4> {product.product.stock} </h4>
                       <button
                         onClick={() => dispatch(removeFromCart(index))}
                         className="rounded-lg w-fit px-4 py-1.5 bg-red-500 text-white hover:bg-red-400">
                         Remove item
                       </button>
-                      <button onClick={()=>dispatch(setProducts(index))} className="bg-black w-fit rounded-lg text-white px-3 py-1.5 hover:bg-gray-700 transition-all duration-200">Quantity</button>
                     </div>
                   </li></Link>
                 ))}
@@ -110,7 +106,7 @@ useEffect(()=>{
             <hr className="w-full" />
             <div className="flex items-center justify-between">
               <p>Total</p>
-              <span>{TotalPrice} DZD</span>
+              <span>{TotalPrice}DZD</span>
             </div>
             <hr className="w-full" />
             <div className="justify-between w-full flex items-center">
@@ -131,25 +127,40 @@ useEffect(()=>{
             >
               Checkout
             </button></Link>
-           
           </div>
         </div>
       </div>
-      <div className="flex gap-4 flex-col m-3">
-        <p className="text-2xl font-semibold">Favourites</p>
-        <div className="flex flex-row gap-3">
-          <p>Want to see your favourites?</p>
-          <div className="flex items-center justify-center gap-3">
-            <a href="/register" className="underline text-gray-500">
-              Sign-in
-            </a>
-            <p>or</p>
-            <a href="/login" className="text-gray-500 underline">
-              Join-us
-            </a>
+      {
+        isConnected ?
+        (
+          <div className="flex rounded-lg p-3 w-64 items-center gap-6 justify-center border shadow-lg">
+<div className="rounded-full p-1.5">
+<img src="utilisateur.png" alt="" height={20} width={20} />
+</div>
+<div>
+<p className="text-green-400 font-semibold">{user.firstname}</p>
+
+</div>
+          </div>
+
+         ):(
+          <div className="flex gap-4 flex-col m-3">
+          <p className="text-2xl font-semibold">Favourites</p>
+          <div className="flex flex-row gap-3">
+            <p>Want to see your favourites?</p>
+            <div className="flex items-center justify-center gap-3">
+              <a href="/register" className="underline text-gray-500">
+                Sign-in
+              </a>
+              <p>or</p>
+              <a href="/login" className="text-gray-500 underline">
+                Join-us
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+         )
+        }
     </>
   );
 }

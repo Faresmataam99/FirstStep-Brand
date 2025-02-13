@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react";
 import axios from "axios";
+import{  Router , useRouter } from "next/router";  
 
 export default () => {
   const [products, setProducts] = useState([]);
@@ -14,11 +15,16 @@ export default () => {
   const [stock, setStock] = useState("");
   const [colors, setColors] = useState("");
   const [sizes, setSizes] = useState("");
-
+  const [brand, setBrand] = useState('');
+  const [addedProduct, setAddedProduct] = useState(false);  // State to track if product is added
   const fileInputRef = useRef(null); // Reference for the file input
 
   const submit = async (e) => {
+
     e.preventDefault();
+    const colorsArray = colors.split(',').map(color => color.trim());
+    const sizesArray = sizes.split(',').map(size => size.trim());
+    
     const productData = {
       title,
       price,
@@ -26,24 +32,23 @@ export default () => {
       description,
       type,
       stock,
-      colors: colorArray,
-      sizes: sizeArray,
+      colors: colorsArray,
+      sizes: sizesArray,
+      brand,
       image, // Add the image field to the productData
     };
-
+    
     try {
-      const response = await axios.post(
+      const response = await axios.postForm(
         "http://localhost:5000/products",
         productData
       );
       setProducts(response.data);
+      setAddedProduct(true);  // Set the state to show the success message
+
     } catch (e) {
       console.error("Error adding product:", e);
     }
-  };
-
-  const addedProduct = () => {
-    // Logic for adding product can go here
   };
 
   const handleFileUploadClick = () => {
@@ -60,6 +65,55 @@ export default () => {
   return (
     <>
       <div className="flex items-center justify-center p-20">
+        {/* Success Message */}
+      {addedProduct && (
+        <div className="flex flex-col gap-2 w-60 sm:w-72 text-[10px] sm:text-xs z-50">
+          <div className="succsess-alert cursor-default flex items-center justify-between w-full h-12 sm:h-14 rounded-lg bg-[#232531] px-[10px]">
+            <div className="flex gap-2">
+              <div className="text-[#2b9875] bg-white/5 backdrop-blur-xl p-1 rounded-lg">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m4.5 12.75 6 6 9-13.5"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <p className="text-white">done successfully </p>
+                <p className="text-gray-500">This is the description section</p>
+              </div>
+            </div>
+            <button
+              className="text-gray-600 hover:bg-white/5 p-1 rounded-md transition-colors ease-linear"
+              onClick={() => setAddedProduct(false)}  // Hide the message
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18 18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+      {/* succes message */}
         <div className="grid grid-cols-2 rounded-lg border">
           {/* the whole form */}
           <div className="flex items-center h-full">
@@ -96,6 +150,20 @@ export default () => {
                 />
                 <label className="absolute left-0 top-0 text-gray-400 pointer-events-none text-base transition-all duration-300 transform scale-100 origin-top-left focus:scale-75 focus:text-orange-500 -translate-y-6">
                   Price
+                </label>
+                <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-orange-500 transition-all duration-300"></div>
+              </div>
+
+              {/* Brand */}
+              <div className="relative mb-5 w-full">
+                <input
+                  value={brand}
+                  type="text"
+                  className="w-full py-2 text-base border-b-2 border-gray-300 bg-transparent outline-none focus:border-orange-500 focus:pb-3 transition-all duration-300"
+                  onChange={(e) => setBrand(e.target.value)}
+                />
+                <label className="absolute left-0 top-0 mt-1 text-gray-400 pointer-events-none text-base transition-all duration-300 transform scale-100 origin-top-left focus:scale-75 focus:text-orange-500 -translate-y-6">
+                  Brand
                 </label>
                 <div className="absolute bottom-0 left-0 h-0.5 w-0 bg-orange-500 transition-all duration-300"></div>
               </div>
@@ -215,6 +283,8 @@ export default () => {
           </div>
         </div>
       </div>
+
+      
     </>
   );
 };

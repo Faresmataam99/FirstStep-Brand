@@ -18,7 +18,7 @@ export const Adds = () => {
         }}
         navigation={true} 
         loop={true} 
-        className="w-full max-w-3xl"
+        className="w-full max-w-3xl "
       >
         {/* First Slide */}
         <SwiperSlide>
@@ -30,9 +30,9 @@ export const Adds = () => {
         </SwiperSlide>
         {/* Second Slide */}
         <SwiperSlide>
-          <Link href={"/register"}>
+          <Link href={"/memberships"}>
             <h1 className="hover:underline text-sm text-center font-semibold">
-              Get a BrandZone Gift Card
+              Get a BrandZone Membership Card
             </h1>
           </Link>
         </SwiperSlide>

@@ -76,7 +76,7 @@ export default function AnimatedPage() {
           <div className="relative">
             <Link href="/help">
               <li
-                className="cursor-pointer p-2 hover:text-orange-600 transition"
+                className="cursor-pointer p-2 text-md hover:text-orange-600 transition"
                 onMouseEnter={() => setHovered(true)}
                 onMouseLeave={() => setHovered(false)}
               >
@@ -97,29 +97,29 @@ export default function AnimatedPage() {
               </motion.div>
             )}
           </div>
+          {isConnected ? (
+            <Link href={""}>
+              <li className="  bg-orange-200 px-4 text-md py-1.5 rounded-full ">{user.firstname}</li>
+            </Link>
+          ) : (
+            <Link href="/register">
+              <li className="hover:text-orange-600 text-md transition">Join us</li>
+            </Link>
+          )}
 
           {isConnected ? (
             <button
               onClick={logout}
-              className="bg-rose-950 text-rose-400 border border-rose-400 border-b-4 font-medium px-4 py-2 rounded-md hover:brightness-150 hover:border-t-4 hover:border-b active:opacity-75 outline-none duration-300 group"
+              className="rounded-full bg-red-600 text-md text-white px-4 py-1.5 "
             >
               Logout
             </button>
           ) : (
             <Link href="/login">
-              <li className="hover:text-orange-600 transition">Sign in</li>
+              <li className="hover:text-orange-600 text-md  transition">Sign in</li>
             </Link>
           )}
 
-          {isConnected ? (
-            <Link href={""}>
-              <li className="text-orange-600 font-semibold">{user.firstname}</li>
-            </Link>
-          ) : (
-            <Link href="/register">
-              <li className="hover:text-orange-600 transition">Join us</li>
-            </Link>
-          )}
         </ul>
       </div>
 
@@ -140,7 +140,7 @@ export default function AnimatedPage() {
 
         {/* Navigation Links */}
         <ul className="flex gap-8 text-lg font-semibold">
-          {["New", "Men", "Kids", "Brands", "Sales", "Women"].map((item) => (
+          {["New", "Men", "Kids", "Brands", "Woman"].map((item) => (
             <Link href={`/${item.toLowerCase()}`} key={item}>
               <li className="hover:underline hover:underline-offset-4 transition">
                 {item}

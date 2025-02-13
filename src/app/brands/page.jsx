@@ -17,7 +17,7 @@ export default () => {
   return (
     <>
       <motion.div
-        className="h-screen w-screen fixed top-0 left-0 -z-10"
+        className="h-full w-full fixed top-0 left-0 -z-10"
         style={{ backgroundColor: bgColor }}
         animate={{ backgroundColor: bgColor }}
         transition={{ duration: 0.3 }}
@@ -30,13 +30,6 @@ export default () => {
         >
           <img src="./adidasbrand.jpg" alt="Adidas" />
         </div></Link> 
-        <div
-          onMouseOver={() => handleHover("#8c454b")} 
-          className="border hover:scale-110 transition-all duration-200"
-        >
-          
-          <img src="nbbrand.jpg" alt="New Balance"/>
-        </div>
         <div
           onMouseOver={() => handleHover("#546E7F")} 
           className="border hover:scale-110 transition-all duration-200"

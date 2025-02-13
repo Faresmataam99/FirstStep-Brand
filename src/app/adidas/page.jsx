@@ -1,10 +1,31 @@
 "use client";
 import { Inter } from "next/font/google"; // 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ["latin"], weight: "400" }); // 
 
 export default function Home() {
+  const [products,setProducts]=useState([])
+  const [query,setQuery]=useState('')
+
+  useEffect(()=>{
+    try{
+      if(query){
+        const fetchProducts = async()=>{
+          const response = axios.get(`http://localhost:5000/products?brand=${query}`)
+          .then((response)=>setProducts(response.data))
+        }
+    }else{
+      const response = axios.get(`http://localhost:5000/products`)
+      .then((response)=>setProducts(response.data))
+    }
+      }catch(e){
+        console.error(e)
+      }
+    
+   
+  })
   return (
     <>
       <div className="flex items-center justify-center flex-col gap-3 max-w-screen-xl m-auto">
@@ -15,12 +36,12 @@ export default function Home() {
             className="w-full"
           />
           <div
-            className={`flex mt-24 p-4  flex-col gap-3 font-bold text-white text-4xl text absolute inset-0 ${inter.className}`}
+            className={`flex mt-24 p-4  flex-col gap-14 font-bold px-11 text-white text-4xl text absolute inset-0 ${inter.className}`}
           >
-            <p>The brand with the three stripes</p>
-            <p>Die welt marke mit den 3 streifen</p>
-            <p>La marque aux trois bandes</p>
-            <p>スリーストライプスのブランド</p>
+            <p className="font-extrabold">The brand with the three stripes</p>
+            <p className="font-extrabold">Die welt marke mit den 3 streifen</p>
+            <p className="font-extrabold">La marque aux trois bandes</p>
+            <p className="font-extrabold">スリーストライプスのブランド</p>
           </div>
 <div className="flex m-20 items-center justify-center gap-4 shadow-lg border text-xl font-semibold p-3">
   <img src="samba.jpg" alt="" height={500} width={500} />
@@ -45,6 +66,28 @@ export default function Home() {
             </div>
           </div>
           {/* end of the presentation */}
+
+          <div className="flex items-center justify-center flex-col m-10 p-4  ">
+<div className="text-center items-center flex-col flex">
+  <p className="text-4xl font-semibold">Bold style with everyday comfort</p>
+  <p className="text-6xl font-bold "> Discover the new collection <br />
+  of <div className="flex items-center flex-col m-2 justify-center">
+  <img src="orangeadidas.png" alt="" height={50} width={50} />
+  <span className="text-orange-400 hover:shadow-lg rounded-full p-4  hover:shadow-orange-400 transition-all duration-200"> Adidas Campus</span>
+    </div> 
+   </p>
+</div>
+</div>
+
+{/* image side */}
+<div className="flex items-center justify-center">
+<img src="twowomenad.jpg" alt="" className="w-screen object-cover relative" />
+<div className="flex flex-col">
+<p className="font-bold text-6xl  "> originals never fade</p>
+</div>
+</div>
+{/* image side */}
+
         </div>
       </div>
     </>

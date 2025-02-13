@@ -1,10 +1,16 @@
 "use client"
 
 export default ()=>{
+  useEffect(()=>{
+    try{
+
+    }catch(e){
+      
+    }
+  })
     return(
         <>
         <div className="grid grid-cols-3 gap-6 p-10">
-
 <div className="flex flex-col bg-white rounded-3xl border shadow-lg ">
   <div className="px-6 py-8 sm:p-10 sm:pb-6">
     <div className="grid items-center justify-center w-full grid-cols-1 text-left">
