@@ -45,13 +45,24 @@ const router = useRouter();
                     className="w-96 rounded-full text-lg p-3 hover:bg-gray-200 border transition-all duration-200" 
                     onChange={(e) => setEmail(e.target.value)} 
                 />
-                <input 
-                    type="text" 
-                    placeholder="Enter your phone number"
-                    className="w-96 rounded-full text-lg p-3 hover:bg-gray-200 border transition-all duration-200" 
-                    onChange={(e) => setPhone(e.target.value)} 
-                />
-
+                
+{/* phone panel */}
+<div class="bg-white p-4 rounded-lg max-w-[350px]">
+            <label class="text-gray-600 text-sm">
+                Phone number
+            </label>
+            <div class="relative mt-2 max-w-xs text-gray-500">
+                <div class="absolute inset-y-0 left-3 my-auto h-6 flex items-center border-r pr-2">
+                    <select class="text-sm outline-none rounded-lg h-full">
+                        <option>US</option>
+                        <option>DZD</option>
+                        <option>MR</option>
+                    </select>
+                </div>
+                <input type="number" placeholder="+1 (555) 000-000" class="w-full pl-[4.5rem] pr-3 py-2 appearance-none bg-transparent outline-none border focus:border-slate-600 shadow-sm rounded-lg"/>
+            </div>
+        </div>
+{/* phone panel */}
                 <input 
                     type="text"   
                     placeholder="Enter your name"

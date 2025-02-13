@@ -3,7 +3,10 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState ={
-    user:{},
+    user:{
+        firstname:"",
+        isAdmin:false,
+    },
     isConnected:false
 }
 export const userSlice = createSlice({
@@ -11,11 +14,16 @@ export const userSlice = createSlice({
     initialState,
     reducers:{
         loginAction(state,action){
+
             state.user=action.payload
+            if(state.user.type=='admin'){
+                state.user.isAdmin=true
+            }
             state.isConnected=true
         },
         logoutAction(state){
-            state.user={}
+            state.user={firstname:"",
+            }
             state.isConnected=false
         }
     }

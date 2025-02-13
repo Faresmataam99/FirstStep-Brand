@@ -11,6 +11,7 @@ const Shopping = () => {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("");
   const [sort, setSort] = useState("");
+  const [query,setQuery]=useState("")
 
 
   const isConnected = useSelector((state) => state.user.isConnected);
@@ -19,8 +20,14 @@ const Shopping = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/products");
+        if(query){
+          const response = await axios.get(`http://localhost:5000/products?title=${query}`);
+          setProducts(response.data);
+        }else{
+          const response = await axios.get("http://localhost:5000/products");
         setProducts(response.data);
+        }
+        
       } catch (e) {
         console.log(e);
       }

@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 
 
 export const metadata = {
-  title: "Nike GB",
+  title: "Brand Zone",
   description: "Steve the fox from small heath",
 };
 

@@ -15,7 +15,6 @@ import {
   Legend,
 } from "chart.js";
 
-// Register necessary chart components
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -73,7 +72,7 @@ export default function OrdersPage() {
   };
 
   return (
-    <div className="flex items-center p-4 justify-center border flex-col rounded-lg">
+    <div className="flex items-center p-4  border flex-col rounded-lg">
       <div className="flex items-center gap-4 p-3 ">
         <ul className="flex items-center flex-col gap-3 ">
           {orders.map((order, index) => (

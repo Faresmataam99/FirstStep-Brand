@@ -15,6 +15,7 @@ export default () => {
   const [email,setemail] = useState("");
   const [password,setpassword]=useState('')
 
+
   const router = useRouter();
 
   const submit = async (e) => {
@@ -85,10 +86,8 @@ export default () => {
             <input
               onChange={(e)=>setbirthdate(e.target.value)}
               value={birthdate}
-              className="p-2 text-lg rounded-full hover:bg-gray-200 transition-all duration-200 w-96"
-              type="text"
-              id="text"
-              name="text"
+              className="p-2 placeholder-gray-200 text-lg rounded-full hover:bg-gray-200 transition-all duration-200 w-96"
+              type="date"
               placeholder=""
               required
             />
@@ -112,6 +111,11 @@ export default () => {
               name="password"
               placeholder="Password..."
               required
+            />
+            <input type="text"
+            
+            
+            
             />
 
             <button
@@ -137,7 +141,7 @@ export default () => {
               take advantage of many offers and discounts <br />
               <span className="flex items-center justify-center gap-3">
                 <a href="/" className="text-orange-500 hover:underline transition-all duration-200 font-bold">
-                    at Nike.com
+                    at Brandzone.com
                 </a>
                 <img src="./nike.png" height={40} width={40} alt="" />
               </span>

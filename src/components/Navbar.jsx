@@ -11,7 +11,39 @@ export default function AnimatedPage() {
   const user = useSelector((state) => state.user.user);
   const cartLength = useSelector((state) => state.counter);
   const dispatch = useDispatch();
+  const [products, setProducts] = useState([]);
   const [hovered, setHovered] = useState(false);
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        if(query){
+          const response = await axios.get(`http://localhost:5000/products?title=${query}`);
+          setProducts(response.data); // Assuming response.data is an array of product objects
+        }else{
+          const response = await axios.get(`http://localhost:5000/products`);
+          setProducts(response.data); // Assuming response.data is an array of product objects
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
+    fetchProducts();
+  }, []); // Empty dependency array to ensure it runs only once on mount
+
+  const handleChange = (e) => {
+    const input = e.target.value;
+    setQuery(input);
+
+    // Filter products based on the input query
+    const filteredSuggestions = products.filter((product) =>
+      product.title.toLowerCase().includes(input.toLowerCase()) // Assuming product name is in 'name' field
+    );
+    setSuggestions(filteredSuggestions);
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -80,7 +112,9 @@ export default function AnimatedPage() {
           )}
 
           {isConnected ? (
-            <li className="text-orange-600 font-semibold">{user.firstname}</li>
+            <Link href={""}>
+              <li className="text-orange-600 font-semibold">{user.firstname}</li>
+            </Link>
           ) : (
             <Link href="/register">
               <li className="hover:text-orange-600 transition">Join us</li>
@@ -120,7 +154,23 @@ export default function AnimatedPage() {
           <input
             className="p-2 w-40 border-none rounded-full bg-gray-100 hover:bg-gray-300 focus:outline-none transition-all duration-300"
             placeholder="Search items"
+            value={query}
+            onChange={handleChange}
+            list="search-options"
           />
+          <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          transition={{ duration: 0.2 }}
+          className="absolute z-10 mt-2 w-40 bg-white border border-gray-300 rounded-lg shadow-lg"
+          id="search-options">
+              {suggestions.slice(0,4).map((product, index) => (
+        <Link href={`/shopping/${product.id}`} key={index}>
+            <li className="p-2 text-sm hover:bg-gray-200 cursor-pointer">{product.title}</li>
+        </Link>
+      ))}
+</motion.div>
 
           <div className=" hover:bg-gray-200 transition-all duration-200 hover:rounded-full p-2">
             <Link href="/favourite">
