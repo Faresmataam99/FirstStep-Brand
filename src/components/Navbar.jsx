@@ -99,7 +99,8 @@ export default function AnimatedPage() {
           </div>
           {isConnected ? (
             <Link href={""}>
-              <li className="  bg-orange-200 px-4 text-md py-1.5 rounded-full ">{user.firstname}</li>
+              <li className="  bg-orange-200 px-4 text-md py-1.5 rounded-full ">{user.firstname} {user.lastname} </li>
+
             </Link>
           ) : (
             <Link href="/register">

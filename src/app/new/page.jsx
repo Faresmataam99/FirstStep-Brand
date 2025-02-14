@@ -67,7 +67,10 @@ export default function FilterMenu() {
             <p className="text-sm font-semibold">Pick up today</p>
           </div>
           <div className="flex items-center gap-4">
-            <h1 onClick={toggleFilter} className="cursor-pointer rounded-lg hover:bg-gray-200 transtion-colors px-3 py-1.5 duration-200">
+            <h1
+              onClick={toggleFilter}
+              className="cursor-pointer rounded-lg hover:bg-gray-200 transition-colors px-3 py-1.5 duration-200"
+            >
               {filter}
             </h1>
             <select className="hover:bg-gray-200 rounded-lg px-3 py-1.5  transition-colors duration-200">
@@ -80,57 +83,60 @@ export default function FilterMenu() {
           </div>
         </div>
 
-        {/* Filter Section */}
-        {showFilter && (
-          <motion.div
-            className="flex flex-col gap-4 bg-white p-4 border max-w-sm"
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ duration: 0.5 }}
-          >
-            <ul className="space-y-4">
-              {items.map((item, index) => (
-                <li key={index} className="flex flex-col">
-                  <div
-                    className="flex gap-3 items-center cursor-pointer max-w-sm"
-                    onClick={() => toggleItem(index)}
-                  >
-                    <span className="text-lg font-semibold">{item.label}</span>
-                    <span>{activeItem === index ? "▲" : "▼"}</span>
-                  </div>
-                  {/* Show options if the item is active */}
-                  {activeItem === index && (
-                    <ul className="mt-2 pl-4 space-y-2">
-                      {item.label === "Color" ? (
-                        <div className="flex gap-2 flex-wrap">
-                          {item.options.map((option, i) => (
-                            <div
+        {/* Filter Section and Content */}
+        <div className="flex  gap-2">
+          {showFilter && (
+            <motion.div
+              className="flex flex-col gap-4 bg-white p-4 border sticky h-fit max-w-screen-lg top-4"
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.5 }}
+            >
+              <ul className="space-y-4">
+                {items.map((item, index) => (
+                  <li key={index} className="flex flex-col">
+                    <div
+                      className="flex gap-3 items-center cursor-pointer max-w-sm"
+                      onClick={() => toggleItem(index)}
+                    >
+                      <span className="text-lg font-semibold">{item.label}</span>
+                      <span>{activeItem === index ? "▲" : "▼"}</span>
+                    </div>
+                    {/* Show options if the item is active */}
+                    {activeItem === index && (
+                      <ul className="mt-2 pl-4 space-y-2">
+                        {item.label === "Color" ? (
+                          <div className="flex gap-2 flex-wrap">
+                            {item.options.map((option, i) => (
+                              <div
+                                key={i}
+                                className={`w-6 h-6 rounded-full ${option.color}`}
+                              ></div>
+                            ))}
+                          </div>
+                        ) : (
+                          item.options.map((option, i) => (
+                            <li
                               key={i}
-                              className={`w-6 h-6 rounded-full ${option.color}`}
-                            ></div>
-                          ))}
-                        </div>
-                      ) : (
-                        item.options.map((option, i) => (
-                          <li
-                            key={i}
-                            className="text-sm hover:bg-gray-200 p-1 rounded"
-                          >
-                            {option}
-                          </li>
-                        ))
-                      )}
-                    </ul>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </div>
-      <div>
-        <Shopping/>
+                              className="text-sm hover:bg-gray-200 p-1 rounded"
+                            >
+                              {option}
+                            </li>
+                          ))
+                        )}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+          {/* Shopping Section */}
+          <div className="md:col-span-3">
+            <Shopping />
+          </div>
+        </div>
       </div>
     </>
   );

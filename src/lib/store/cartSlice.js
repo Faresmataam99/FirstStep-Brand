@@ -37,9 +37,6 @@ export const cartSlice = createSlice({
     setProducts: (state, action) => {
       state.products = action.payload;
     },
-    validOrder: (state, action) => {
-      if (state.products[action.payload]);
-    },
     addTowishList: (state, action) => {
       const index = state.products.findIndex(
         (product) => product.product.id === action.payload.id,

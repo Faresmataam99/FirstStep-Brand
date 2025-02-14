@@ -40,19 +40,18 @@ res.status(422).json(error.message('Wrong credentials'))
                <Link href="/shopping"> <li className="hover:underline">Shoes</li></Link>
                <Link href="/shopping"> <li className="hover:underline">Clothing</li></Link>
                <Link href="/shopping"> <li className="hover:underline">Accessories</li></Link>
-               <Link href="/shopping"> <li className="hover:underline">Sales</li></Link>
             </ul>
             </div>
 
         </div>
-<div>
-    <img src="https://i.pinimg.com/736x/00/0a/c5/000ac51668dd3830f49c7290b96d1506.jpg" alt="" className="w-screen h-64"  />
+<div className="flex flex-col items-center gap-6 max-w-screen-xl">
+    <img src="https://static.nike.com/a/images/t_prod/w_1920,c_limit,f_auto,q_auto/243a7c32-0aa7-4c0c-a238-c2b91b91d67e/pdp-replace.jpg" alt="" className="w-screen h-screen object-cover"  />
 <div className="flex items-center justify-center mt-8 mb-5 flex-col gap-3">
-    <p className="text-sm font-light">Run ready</p>
-    <p className="text-6xl font-bold text-center">The Nike Stride <br />
+    <p className="text-lg font-semibold">Run ready</p>
+    <p className="text-6xl font-bold text-center">The Nike Zoom <br />
     Collection</p>
-    <p className="text-sm font-light">The lightweight and breathable essentials you need to put in the miles</p>
-    <button className="bg-black text-white p-2 rounded-full hover:bg-gray-200 transition-all duration-200">Shop</button>
+    <p className="text-lg font-light">The lightweight and breathable essentials you need to put in the miles</p>
+   <Link href={"/shopping"}> <button className="bg-black text-white px-4 py-1.5 rounded-full hover:bg-gray-200 font-lg transition-all duration-200">Shop</button> </Link>
 </div>
 </div>
     </div>
@@ -73,8 +72,8 @@ res.status(422).json(error.message('Wrong credentials'))
     <div className="relative bg-cover bg-center h-80 ">
 <img src="fluo.jpg" alt="" className="w-full h-full object-cover"/>
 <div className="absolute inset-0 flex flex-col gap-3 justify-end bg-black bg-opacity-30 p-4 text-white ">
-<p>Made for Elements</p>
-<p>Nike alphaFly next</p>
+<p className="font-semibold text-lg">Made for Elements</p>
+<p className="font-bold text-lg">Nike alphaFly next</p>
 <Link href="/shopping"><button className="px-5 py-1.5 bg-white rounded-full w-fit text-black font-semibold hover:bg-gray-200 transition-all duration-200">Shop</button></Link>
 </div>
     </div>
@@ -82,8 +81,8 @@ res.status(422).json(error.message('Wrong credentials'))
     <div className="h-80 relative bg-cover bg-center">
         <img src="twoairmax.jpg" alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 flex flex-col gap-3 bg-black justify-end bg-opacity-30 p-4 text-white">
-            <p>Icons the never fade</p>
-            <p>Air max 90</p>
+            <p className=" text-lg font-semibold">Icons the never fade</p>
+            <p className=" text-lg font-bold">Air max 90</p>
             <Link href="/shopping"><button className="bg-white rounded-full w-fit text-black font-semibold px-5 py-1.5 hover:bg-gray-200 transition-all duration-200 ">Shop</button></Link>
         </div>
     </div>
@@ -91,39 +90,67 @@ res.status(422).json(error.message('Wrong credentials'))
     <div className="h-80 relative bg-cover bg-center">
         <img src="/alphafly3.jpg" alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 flex flex-col gap-3 justify-end bg-black bg-opacity-30 p-4 text-white ">
-            <p className="text-3xl">give your runs a little pace</p>
+            <p className="text-lg font-semibold">give your runs a little pace</p>
+            <p className="text-lg font-bold">Air zoom pegasus</p>
            <Link href="/shopping"><button className="px-5 py-1.5 w-fit font-semibold bg-white text-black rounded-full hover:bg-gray-200 transition-all duration-200">Shop</button></Link>
         </div>
 
     </div>
     {/* fourth grid item */}
     <div className="h-80 relative bg-cover bg-center">
-        <img src="/skyNike.jpg" alt="" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-30 p-4 text-white ">
-<p>Stylish and comfortable</p>
+        <img src="https://i.pinimg.com/736x/9a/60/78/9a6078cb04a39075892d708e323ea3d4.jpg" alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-30 p-4 text-white gap-3 ">
+<p className="font-semibold text-lg">Stylish and comfortable</p>
+<p className="font-bold text-lg">The Vapor Max Ev </p>
 <Link href="/shopping"><button className="bg-white text-black w-fit font-semibold px-5 py-1.5  hover:bg-gray-200 font-sembold transition-all duration-200 rounded-full">Shop</button></Link>
         </div>
     </div>
-{/* <div className="h-64 relative bg-cover bg-center">
-              <img src="https://static.nike.com/a/images/f_auto,cs_srgb/w_1536,c_limit/adf3f11e-95e4-4c55-818c-e349d5dbc4b6/women-s-shoes-clothing-accessories.png" alt="" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 flex flex-col justify-end bg-black bg-opacity-30 p-4 text-white">
-              <p className="text-lg">Stylish Comfort</p>
-              <p></p>
-              <button className="bg-white text-black rounded-full  hover:bg-gray-300 font-semibold transition-all duration-200 px-3 py-1.5">
-                Shop
-              </button>
-            </div>
-          </div> */}
 </div>
 {/* end of the grid section */}
-<div className="flex items-center justify-center gap-4 m-10 p-5">
-    <img src="" alt="" />
-    <div className="flex items-center justify-center gap-4 flex-col">
-        <p className="text-6xl font-semibold text-center ">Elevate your distinct <br /> athletic lifestyle expression </p>
-        <p className="text-lg text-center">Discover unique pieces that elevates your fashion statment reflecting the essence <br /> of who you are.Embrace the journey  of the athletic lifestyle with us and <br /> redefine your style narrative with us</p>
-        <button className="px-4 py-1.5 bg-orange-500  rounded-full shadow-lg text-white hover:bg-orange-400 transition-all duration-200" onClick={ScrollUp}>Browse now</button>
-    </div>
-</div>
+<section className="flex items-center justify-center p-6 gap-10 mt-10 mb-6 ">
+          <Link href="/shopping">
+            <div className="font-semibold hover:-translate-y-4 gap-4 transition-all duration-200 flex justify-center hover:shadow-lg flex-col  ">
+              <img
+                src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco,u_126ab356-44d8-4a06-89b4-fcdcc8df0245,c_scale,fl_relative,w_1.0,h_1.0,fl_layer_apply/17245fa0-53f7-4e1a-bcea-39e3210a65c6/M+J+ESS+FLC+PO.png"
+                alt=""
+               height={600}
+               width={600}
+              />
+<button className="rounded-full bg-black text-white font-semibold px-4 py-2"> Clothing </button>
+            </div>
+          </Link>
+
+          <Link href="/shopping">
+            <div className="flex justify-center gap-4 hover:-translate-y-4 transition-all duration-200 flex-col hover:shadow-lg font-semibold ">
+              <img
+                src="https://www.nike.sa/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw96b95243/nk/ac0/4/7/f/4/f/ac047f4f_ce27_4b18_94c4_1d1e77557f09.jpg?sw=700&sh=700&sm=fit&q=100&strip=false"
+                alt=""
+                className="object-cover w-full h-full"
+              />
+<button className="rounded-full bg-black text-white font-semibold px-4 py-2"> Shoes </button>
+             
+            </div>
+          </Link>
+
+          <Link href="/shopping">
+            <div className="flex font-semibold gap-4 justify-center flex-col hover:-translate-y-4 transition-all hover:shadow-lg duration-200">
+              <img src="https://i.pinimg.com/736x/b0/cf/a9/b0cfa9cd7fe0d0eda98561a88bf55408.jpg" alt="" height={500} width={500} />
+<button className="rounded-full bg-black text-white font-semibold px-4 py-2">Running Gear </button>
+
+            </div>
+          </Link>
+          <Link href="/shopping">
+            <div className="flex  justify-center gap-4 font-semibold transition-all duration-200 hover:-translate-y-4 flex-col hover:shadow-lg ">
+              <img
+                src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/5e977d1e-9dc0-4619-9a01-3694d1775453/NK+HERITAGE+EUGENE+WNTRZD+BKPK.png"
+                alt=""
+                className="object-cover w-full h-full"
+              />
+<button className="rounded-full bg-black text-white font-semibold px-4 py-2">Accessories </button>
+              </div>
+          </Link>
+          
+        </section>
 
     </div>
 </div>

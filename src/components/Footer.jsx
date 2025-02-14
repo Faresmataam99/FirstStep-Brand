@@ -142,7 +142,7 @@ import React, { useState } from 'react';
               </div>
             )}
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            <h1 className='text-lg font-semibold hover:underline cursor-pointer'>
+            <h1 className='text-lg font-semibold hover:underline cursor-pointer m-6'>
     Join our network
   </h1>
 <div className="flex items-center gap-4">

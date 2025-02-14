@@ -1,7 +1,8 @@
 "use client"; 
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import {validateOrder} from "@/lib/store/ordersSlice"
 import api from "../../lib/api";
 
 export default  () => {
@@ -14,9 +15,12 @@ export default  () => {
 
 
 const router = useRouter();
-    const products = useSelector(state => state.cart.products);
+    const products = useSelector((state) => state.cart.products);
+    const isValid = useSelector((state)=> state.orders.isValid)
 
     const submit = async (e) => {
+        const router= useRouter()
+        const dispatch = useDispatch()
         e.preventDefault();
         try {
             await api.post("/orders", {
@@ -32,7 +36,6 @@ const router = useRouter();
         }
     };
 
-  
     return (
         <div className="flex items-center justify-center w-screen h-screen bg-orange-300">
             <form 
@@ -75,7 +78,7 @@ const router = useRouter();
                     className="w-96 rounded-full text-lg p-3 hover:bg-gray-200 border transition-all duration-200" 
                     onChange={(e) => setAdress(e.target.value)} 
                 />
-                <button
+                <button onClick={()=>dispatch(validateOrder(orders))}
                     type="submit" 
                     className="rounded-full bg-black text-white px-4 py-2"
                 >

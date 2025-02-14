@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
-import {user} from "@/lib/store/userSlice"
+import { validateOrder } from "@/lib/store/ordersSlice"
 import { removeFromCart, setProducts } from "@/lib/store/cartSlice";
 import { emptyCart } from "@/lib/store/cartSlice";
 import axios from "axios";
@@ -14,6 +14,7 @@ export default ()=> {
   const products = useSelector((state) => state.cart.products);
   const isConnected = useSelector((state) => state.user.isConnected);
   const user = useSelector((state) => state.user?.user);
+  const isValid = useSelector((state)=>state.orders.isValid)
   const TotalPrice = products.reduce((old, item) => old +=(item.price * products.quantity),0 );
 
 
@@ -125,7 +126,7 @@ useEffect(()=>{
               className="rounded-full p-3 w-full bg-gray-200"
               disabled={products.length === 0}
             >
-              Checkout
+              Confirm Order
             </button></Link>
           </div>
         </div>
@@ -160,6 +161,22 @@ useEffect(()=>{
           </div>
         </div>
          )
+        }
+
+        {
+          isValid ? (
+            <div>
+              <p> order validated </p>
+              <p> Delivering Soon </p>
+              <div className="flex items-center gap-4">
+              </div>
+            </div>
+           
+          ):(
+            <div className=" rounded-full border-orange-400 bg-yellow-400 px-4 py-1.5">
+              <p className="text-orange-500"> pending orders </p>
+            </div>
+          )
         }
     </>
   );

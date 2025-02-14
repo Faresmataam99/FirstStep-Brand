@@ -89,7 +89,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-70 transition-all duration-300"></div>
               <div className="absolute inset-0 flex justify-center items-center opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <Link href={`/shopping?search=Nike%20Air%20Force`}>
+                <Link href={`/shopping?search=${NikeAirForce}`}>
                   <button
                     onClick={() => handleViewCollection("Nike Air Force")}
                     className="bg-white text-black px-4 py-2 rounded-lg font-semibold shadow-lg hover:bg-gray-300"
