@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   products: [],
-  searchTerm: ""
+  searchTerm: "",
 };
 
 export const productSlice = createSlice({

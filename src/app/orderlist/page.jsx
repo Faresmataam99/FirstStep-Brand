@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { validateOrder } from "@/lib/store/ordersSlice";
 import axios from "axios";
 import { Bar } from "react-chartjs-2";
@@ -27,6 +27,9 @@ ChartJS.register(
 export default function OrdersPage() {
   const dispatch = useDispatch();
   const [orders, setOrders] = useState([]);
+  const user = useSelector((state)=>state.user.user)
+
+  const isValid= useSelector((state)=>state.orders.isValid)
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -72,21 +75,23 @@ export default function OrdersPage() {
   };
 
   return (
-    <div className="flex items-center p-4  border flex-col rounded-lg">
-      <div className="flex items-center gap-4 p-3 ">
+    <>
+    { user.isAdmin ? (
+      <div className="flex items-center p-4  border flex-col rounded-lg">
+      <div className="flex items-center">
         <ul className="flex items-center flex-col gap-3 ">
           {orders.map((order, index) => (
             <li key={index}>
-              <div className="flex items-center justify-between p-10 w-full">
+              <div className="flex items-center justify-between p-10 w-screen">
                 <div className="flex flex-col ">
-                  <h1 className="font-semibold">{order.name}</h1>
-                  <h2 className="font-semibold">{order.address}</h2>
+                  <h1 className="font-semibold">{order.email}</h1>
+                  <h2 className="font-semibold">{order.adress}</h2>
                   <h3 className="font-semibold">{order.phone}</h3>
                 </div>
 
                 <div className="flex gap-2 items-center">
                   <button
-                    onClick={() => validate(order.id)}
+                    onClick={() => dispatch(validateOrder(order.id))}
                     className="px-4 py-1.5 rounded-lg bg-green-500 text-white hover:bg-green-800 transition-all duration-200"
                   >
                     Validate
@@ -99,10 +104,16 @@ export default function OrdersPage() {
         </ul>
       </div>
 
-
       <div style={{ width: "80%", height: "400px", marginTop: "20px" }}>
         <Bar data={generateChartData()} />
       </div>
     </div>
+    ):(
+      <div className="w-screen h-screen flex justify-center items-center">
+        <p className="text-red-500 text-3xl"> data not found </p>
+      </div>
+    )
+  }
+</>
   );
 }

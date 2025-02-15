@@ -52,10 +52,10 @@ export default ()=>{
                 </Link>
               </div>
             </div>
-<div className="mt-20 flex items-center justify-center text-center">
+<div className="mt-20 flex items-center justify-center gap-6 flex-col text-center">
   <h1 className="text-xl font-semibold"> Explore the collections for your kids <br />
   and suit them perfectly </h1> 
-  <button className="bg-black ">buy the looks</button>
+  <button className="bg-black text-white ">buy the looks</button>
 </div>
 
 

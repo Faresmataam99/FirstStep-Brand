@@ -3,27 +3,24 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
-import { validateOrder } from "@/lib/store/ordersSlice"
-import { removeFromCart, setProducts } from "@/lib/store/cartSlice";
-import { emptyCart } from "@/lib/store/cartSlice";
+import { createOrder, validateOrder } from "@/lib/store/ordersSlice";
+import { removeFromCart, setProducts, emptyCart } from "@/lib/store/cartSlice";
 import axios from "axios";
 
-export default ()=> {
+export default () => {
   const [promo, setPromo] = useState("");
   const dispatch = useDispatch();
   const products = useSelector((state) => state.cart.products);
   const isConnected = useSelector((state) => state.user.isConnected);
   const user = useSelector((state) => state.user?.user);
-  const isValid = useSelector((state)=>state.orders.isValid)
-  const TotalPrice = products.reduce((old, item) => old +=(item.price * products.quantity),0 );
+  const isValid = useSelector((state) => state.orders.isValid);
 
-
-useEffect(()=>{
-  const products = localStorage.getItem('products')
-  if(products){
-    dispatch(setProducts(JSON.parse(products)))
-  }
-},[])
+  useEffect(() => {
+    const products = localStorage.getItem('products');
+    if (products) {
+      dispatch(setProducts(JSON.parse(products)));
+    }
+  }, [dispatch]);
 
   const promoCode = async (e) => {
     e.preventDefault();
@@ -36,10 +33,18 @@ useEffect(()=>{
     }
   };
 
+  const totalPrice = products.reduce((total, product) => {
+    // Ensure selectedQuantity exists before multiplying
+    const quantity = product.selectedQuantity || 0; // fallback to 0 if not present
+    return total + (product.product.price * quantity);
+  }, 0);
+
+
+
   return (
     <>
       <div className="flex gap-4 flex-col">
-        <div className="flex justify-between items-center p-2 w-full">
+        <div className="flex justify-between p-2 w-full">
           {/* Bag Panel */}
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-semibold">Bag</p>
@@ -50,30 +55,39 @@ useEffect(()=>{
                 </button>
               </Link>
             ) : (
-              <div className="flex items-center justify-center gap-4 p-5 max-w-screen-lg ">
-              <ul  className="flex items-center gap-3">
-                {products.map((product,index) => (
-                <Link href={`/shopping/${product.product.id}`}key={product.product.id}><li key={product.product.id} className="flex items-center gap-4 border">
-                    <img src={product.product.image} className="w-[100px] object-cover rounded-lg" />
-                    <div className="flex flex-col gap-2">
-                      <h2 className="text-xl font-semibold">{product.product.title}</h2>
-                      <h3 className="text-lg font-light">{product.product.price} DZD</h3>
-                      <h3 className="font-semibold">Size: {product.product.sizes} </h3>
-                      <button
-                        onClick={() => dispatch(removeFromCart(index))}
-                        className="rounded-lg w-fit px-4 py-1.5 bg-red-500 text-white hover:bg-red-400">
-                        Remove item
-                      </button>
-                    </div>
-                  </li></Link>
-                ))}
-              </ul>
+              <div className="flex items-center justify-center gap-4 p-5 max-w-screen-lg">
+                <ul className="flex items-center gap-3">
+                  {products.map((product, index) => (
+                    <Link href={`/shopping/${product.product.id}`} key={product.product.id}>
+                      <li className="flex items-center gap-4 border">
+                        <img src={product.product.image} className="w-[100px] object-cover rounded-lg" />
+                        <div className="flex flex-col gap-2 p-4">
+                          <h2 className="text-xl font-semibold">{product.product.title}</h2>
+                          <h3 className="text-lg font-light">{product.product.price} DZD</h3>
+                          <h3 className="font-semibold">Size: {product.selectedSize}</h3> {/* Display the selected size */}
+                          <h3 className="font-semibold">quantity: {product.selectedQuantity}</h3> {/* Display the selected size */}
+                          <button
+                            onClick={() => dispatch(removeFromCart(index))}
+                            className="rounded-lg w-fit px-4 py-1.5 bg-red-500 text-white hover:bg-red-400">
+                            Remove item
+                          </button>
+                        </div>
+                      </li>
+                    </Link>
+                  ))}
+                </ul>
               </div>
             )}
-             <div className="flex jusitfy-end">
-          <button onClick={()=>dispatch(emptyCart(index))} className="bg-black h-fit rounded-lg font-light text-white px-4 py-1.5 hover:bg-gray-700 hover:shadow-lg transition-all duration-200">Empty cart</button>
+
+            <div className="flex justify-end">
+              <button
+                onClick={() => dispatch(emptyCart())}
+                className="bg-black h-fit rounded-lg font-light text-white px-4 py-1.5 hover:bg-gray-700 hover:shadow-lg transition-all duration-200">
+                Empty cart
+              </button>
+            </div>
           </div>
-          </div>
+
           {/* Checkout Section */}
           <div className="flex flex-col gap-4">
             <p className="text-2xl font-semibold">Summary</p>
@@ -100,84 +114,79 @@ useEffect(()=>{
                 </form>
               </div>
             </motion.div>
+
+            {/* Shipping & Handling, Total Price, and Tax */}
             <div className="flex items-center justify-between">
               <p>Estimated shipping & handling</p>
               <p>Free</p>
             </div>
             <hr className="w-full" />
             <div className="flex items-center justify-between">
-              <p>Total</p>
-              <span>{TotalPrice}DZD</span>
+              <p className="font-semibold"> {totalPrice} </p>
+              <span>DZD</span>
             </div>
             <hr className="w-full" />
             <div className="justify-between w-full flex items-center">
-            <p>Estimated tax</p>
+              <p>Estimated tax</p>
             </div>
             <hr className="w-full" />
             <p>Members get free shipping on orders 15000 DZD+</p>
-            <hr className="w-full"/>
-            <div className="flex items-center gap-4  ">
-<Link href={"login"}> <p className="text-gray-400 hover:undelrine">Join us</p> </Link>
-<p>or</p>
-<Link href={"register"}><p className="text-gray-400 hover:underline">Sign-in</p></Link>
-        </div>
-           <Link href={"/orders"}> <button
-              onClick={() => alert("Checkout process started")}
-              className="rounded-full p-3 w-full bg-gray-200"
-              disabled={products.length === 0}
-            >
-              Confirm Order
-            </button></Link>
+            <hr className="w-full" />
+
+            {isConnected ? (
+              <div></div>
+            ) : (
+              <div className="flex items-center gap-4">
+                <Link href={"login"}><p className="text-gray-400 hover:underline">Join us</p></Link>
+                <p>or</p>
+                <Link href={"register"}><p className="text-gray-400 hover:underline">Sign-in</p></Link>
+              </div>
+            )}
+
+            <Link href={"/orders"}>
+              <button
+                onClick={() => dispatch(createOrder())}
+                className="rounded-full p-3 w-full bg-gray-200"
+                disabled={products.length === 0}
+              >
+                Confirm Order
+              </button>
+            </Link>
           </div>
         </div>
       </div>
-      {
-        isConnected ?
-        (
-          <div className="flex rounded-lg p-3 w-64 items-center gap-6 justify-center border shadow-lg">
-<div className="rounded-full p-1.5">
-<img src="utilisateur.png" alt="" height={20} width={20} />
-</div>
-<div>
-<p className="text-green-400 font-semibold">{user.firstname}</p>
 
-</div>
+      {isConnected ? (
+        <div className="flex rounded-lg p-3 w-64 items-center gap-6 justify-center border shadow-lg">
+          <div className="rounded-full p-1.5">
+            <img src="utilisateur.png" alt="User Avatar" height={20} width={20} />
           </div>
-
-         ):(
-          <div className="flex gap-4 flex-col m-3">
+          <div>
+            <p className="text-green-400 font-semibold">{user.firstname}</p>
+          </div>
+        </div>
+      ) : (
+        <div className="flex gap-4 flex-col m-3">
           <p className="text-2xl font-semibold">Favourites</p>
           <div className="flex flex-row gap-3">
             <p>Want to see your favourites?</p>
             <div className="flex items-center justify-center gap-3">
-              <a href="/register" className="underline text-gray-500">
-                Sign-in
-              </a>
+              <a href="/register" className="underline text-gray-500">Sign-in</a>
               <p>or</p>
-              <a href="/login" className="text-gray-500 underline">
-                Join-us
-              </a>
+              <a href="/login" className="text-gray-500 underline">Join-us</a>
             </div>
           </div>
         </div>
-         )
-        }
+      )}
 
-        {
-          isValid ? (
-            <div>
-              <p> order validated </p>
-              <p> Delivering Soon </p>
-              <div className="flex items-center gap-4">
-              </div>
-            </div>
-           
-          ):(
-            <div className=" rounded-full border-orange-400 bg-yellow-400 px-4 py-1.5">
-              <p className="text-orange-500"> pending orders </p>
-            </div>
-          )
-        }
+      {isValid && isConnected ? (
+        <div className="flex items-center flex-col gap-3">
+          <p>Order validated</p>
+          <p>Delivering Soon</p>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </>
   );
-}
+};

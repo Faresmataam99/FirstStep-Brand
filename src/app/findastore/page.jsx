@@ -1,71 +1,56 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Script from "next/script";
-import {APIProvider, Map} from '@vis.gl/react-google-maps';
+import { MapContainer, TileLayer, Marker, Popup, Polygon } from "react-leaflet";
+import { useMapEvents } from "react-leaflet";
+import "leaflet/dist/leaflet.css"; // Import Leaflet CSS
 
+// Some example coordinates for Algerian territories (e.g., Algiers)
+const algeriaTerritory = [
+  [36.75, 3.06], // Algiers
+  [36.77, 3.08],
+  [36.78, 3.07],
+  [36.76, 3.05],
+];
 
 export default function StoreLocator() {
-  const mapRef = useRef(null);
-  const searchBoxRef = useRef(null);
-  const googleMapsLoaded = useRef(false);
-
   const [location, setLocation] = useState("");
+  const [mapCenter, setMapCenter] = useState([36.75, 3.06]); // Default to Algiers
+  const [zoom, setZoom] = useState(8); // Default zoom level
 
-  useEffect(() => {
-    if (googleMapsLoaded.current) {
-      initMap();
-    }
-  }, [googleMapsLoaded.current]);
+  const onMapClick = (e) => {
+    const { lat, lng } = e.latlng;
+    setMapCenter([lat, lng]); // Update map center to the clicked position
+    setZoom(14); // Zoom in when clicking on the map
+  };
 
-  const initMap = () => {
-    const map = new google.maps.Map(mapRef.current, {
-  
-      center: { lat: 51.5074, lng: -0.1278 }, // Default center: London
-      zoom: 8,
+  const LocationSearchBox = () => {
+    const map = useMapEvents({
+      click: onMapClick,
     });
 
-    const searchBox = new google.maps.places.SearchBox(searchBoxRef.current);
-
-    // Bias the SearchBox results towards the map's viewport
-    map.addListener("bounds_changed",()=>{
-      searchBox.setBounds(map.getBounds())
-    })
-
-    const marker = new google.maps.Marker({
-      map,
-      draggable: true,
-    });
-
-    searchBox.addListener("places_changed", () => {
-      const places = searchBox.getPlaces();
-      if (places.length === 0) {
-        return;
+    useEffect(() => {
+      if (location) {
+        // Simulate a location search (we can implement actual geocoding here)
+        // For now, we just update the map to the provided location coordinates (Algiers as default)
+        setMapCenter([36.75, 3.06]);
+        setZoom(14);
       }
+    }, [location]);
 
-      const place = places[0];
-      if (!place.geometry || !place.geometry.location) {
-        console.log("Place not found");
-        return;
-      }
-
-      // Update map and marker
-      map.setCenter(place.geometry.location);
-      map.setZoom(14);
-      marker.setPosition(place.geometry.location);
-    });
+    return null; // Since we're using useMapEvents, we don't need to render anything here
   };
 
   return (
     <div className="flex items-center gap-6 flex-col">
       <p className="text-xl font-semi-bold">Find the nearest Store:</p>
+
       <div className="flex items-center justify-center">
         <form>
           <label htmlFor="location" className="sr-only">
             Location
           </label>
           <input
-            ref={searchBoxRef}
             type="text"
             placeholder="Find nearby stores..."
             id="location"
@@ -75,15 +60,32 @@ export default function StoreLocator() {
           />
         </form>
       </div>
-      <div
-        ref={mapRef}
-        className="w-screen h-screen"
-      ></div>
-      <Script
-        src={`https://maps.googleapis.com/maps/api/js?key=&libraries=places`}
-        onLoad={() => (googleMapsLoaded.current = true)}
-        async
-      />
+
+      {/* Leaflet Map */}
+      <MapContainer
+        center={mapCenter}
+        zoom={zoom}
+        scrollWheelZoom={false}
+        style={{ height: "500px", width: "100%" }}
+      >
+        {/* Tile Layer from OpenStreetMap */}
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+
+        {/* Example marker in Algiers */}
+        <Marker position={mapCenter}>
+          <Popup>Brand zone Store in Algiers</Popup>
+        </Marker>
+
+        {/* Example Territory (Polygon) for Algeria */}
+        <Polygon positions={algeriaTerritory} color="blue" weight={2}>
+          <Popup>Algiers Territory</Popup>
+        </Polygon>
+
+        <LocationSearchBox /> {/* Search Box for interacting with the map */}
+      </MapContainer>
     </div>
   );
 }

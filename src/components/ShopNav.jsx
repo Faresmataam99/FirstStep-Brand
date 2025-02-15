@@ -10,7 +10,7 @@ export default ()=>{
     const [search,setSearch]=useState('')
     const [category,setCategory]=useState('')
 
-    const isConnected = useSelector(state=>state.user.isConnected)
+const isAdmin = useSelector((state)=>state.user.isAdmin)
  
     const filter = ()=>{
       axios.get('http://localhost:5000/products',{
@@ -53,7 +53,7 @@ return(
             </select>
             <button className="bg-black text-white px-4 py-2 rounded-full" onClick={filter}>  Search  </button> 
             {
-              isConnected && <span className="bg-orange-500 px-3 py-1.5 rounded-lg hover:bg-orange-300 text-white"> Admin </span>
+              isAdmin && <span className="bg-orange-500 px-3 py-1.5 rounded-lg hover:bg-orange-300 text-white"> Admin </span>
             }
           </div>
         </div>

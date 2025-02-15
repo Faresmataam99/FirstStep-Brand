@@ -81,7 +81,7 @@ const Filter = () => {
       label: "Shop by price",
       options: ["£0-25", "£25-50", "£50-100", "Over £150"],
     },
-    { label: "Brands", options: ["Nike", "Converse", "Jordan"] },
+    { label: "Brands", options: ["Nike", "Adidas"] },
     {
       label: "Sports & activities",
       options: ["Swimming", "Football", "Basketball", "Running"],

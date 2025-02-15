@@ -6,90 +6,100 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToCart } from "@/lib/store/cartSlice";
 
-import { useSelector } from "react-redux"; 
-
 export default () => {
-
   const dispatch = useDispatch();
-
   const [selectedImage, setSelectedImage] = useState([]);
-  const [product, setproducts] = useState([]);
-  const [size,setSize]=useState('')
+  const [product, setProduct] = useState({});
+  const [size, setSize] = useState('');
   const params = useParams();
+  const [quantity,setQuantity]=useState('')
 
   useEffect(() => {
     axios
       .get(`http://localhost:5000/products/${params.id}`)
       .then((response) => {
-        setproducts(response.data)
+        setProduct(response.data);
       });
   }, [params.id]);
 
   const onMouseImages = (image) => {
-    setSelectedImage(product.image);
+    setSelectedImage(image);
   };
 
-const slsectSize = ()=>{
-  setSize=(i.target)
-  console.log(i.target)
-}
+  // Set the selected size when a user clicks on a size option
+  const handleSizeSelection = (selectedSize) => {
+    setSize(selectedSize);
+  };
+  const handleQuantitySelection = (selectedQuantity) => {
+    // Ensure the quantity is a positive integer
+    if (selectedQuantity <= 0 || isNaN(selectedQuantity)) {
+      setQuantity(1); // Default to 1 if invalid input
+    } else {
+      setQuantity(Number(selectedQuantity)); // Ensure it's a number
+    }
+  };
+  
 
+  // Handle adding the product to the cart
+  const handleAddToCart = () => {
+    if (!size) {
+      alert("Please select a size before adding to the cart.");
+      return;
+    }
+    dispatch(addToCart({ product, selectedSize: size, selectedQuantity: quantity }));
+  };
 
   return (
     <>
       <div className="grid grid-cols-2 gap-2 items-center p-20">
-        <div className="grid grid-cols-2 gap-2 flex-grow ">
-          {/* ounmouse images panel */}
-          {/* <div className="flex gap-2 flex-col col-span-2">
-
-            {products.map((product) => (
-              <img
-                key={index}
-                onMouseOver={() => onMouseImages(product.image)}
-                className="hover:bg-opacity-20 duration-100 bg-black transition-all h-20"
-                src={product.image}
-              />
-            ))}
-          </div> */}
-          {/* Large image */}
+        <div className="grid grid-cols-2 gap-2 flex-grow">
           <div className="col-span-9 h-full">
-            <img src={product.image} alt="" />
+            <img src={product.image} alt={product.title} />
           </div>
         </div>
-        {/* second panel */}
-        <div className="flex flex-col  sticky top-0 right-0  m-auto ">
+
+        {/* Second Panel (Product Details and Add to Cart Section) */}
+        <div className="flex flex-col sticky top-0 right-0 m-auto">
           <div className="flex flex-col gap-3">
             <h1 className="text-2xl font-semibold">{product.title}</h1>
-            <h1 className="text-lg font-light "> {product.category} </h1>
-            <span className="text-xl font-light">{product.price} £ </span>
+            <h1 className="text-lg font-light">{product.category}</h1>
+            <span className="text-xl font-light">{product.price} DZD</span>
           </div>
-          <div className="flex items-center  flex-col gap-3  m-auto ">
+
+          {/* Select Size and Size Guide */}
+          <div className="flex items-center flex-col gap-3 m-auto">
             <div className="flex justify-between w-full gap-4">
               <h1 className="hover:underline font-semibold">Select size</h1>
               <p className="hover:underline font-semibold">Size guide</p>
             </div>
-            <div className="flex items-center gap-4 ">
-            <ul className="flex items-center gap-4">
-                {product.sizes?.map((size,index) => (
-                  <li  key={index} className="border rounded-lg p-3 hover:bg-gray-200 duration-200 transition-all">
-                    {size}
+            <div className="flex items-center gap-4">
+              <ul className="flex items-center gap-4">
+                {product.sizes?.map((sizeOption, index) => (
+                  <li
+                    key={index}
+                    onClick={() => handleSizeSelection(sizeOption)} // Set the selected size
+                    className="border cursor-pointer rounded-lg p-3 hover:bg-gray-200 duration-200 transition-all"
+                  >
+                    {sizeOption}
                   </li>
                 ))}
               </ul>
             </div>
-          </div>
-          <div className="flex items-center justify-center flex-col mt-5">
-          <div className="flex items-center justify-center gap-2 flex-col">
-              <button
-                onClick={() => dispatch(addToCart(product))}
-                className="rounded-full  px-7 py-4 bg-black text-white w-full hover:bg-gray-200 transition-all duration-200"
-              >
-                Add to bag
-              </button>
-              <div className="px-4 rounded-full py-2 border hover:bg-gray-200 w-full transition-all duration-200 text-lg flex items-center gap-2 ">
-                <h1>Add to favourites</h1>
-                <img src="/heart.png" alt="" height={20} width={20} />
+            <div className="flex items-center  justify-center">
+<input type="number" value={quantity} className="bg-gray-200 p-4 rounded-full flex items-center justify-center w-20 text-lg" onChange={(e)=>handleQuantitySelection(e.target.value)}  /> 
               </div>
+          </div>
+
+          {/* Add to Cart and Favourites */}
+          <div className="flex items-center justify-center flex-col mt-5">
+            <div className="flex items-center justify-center gap-2 flex-col">
+            <button
+  onClick={handleAddToCart}
+  className="rounded-full px-7 py-4 bg-black text-white w-full hover:bg-gray-200 transition-all duration-200"
+  disabled={!size || !quantity || quantity <= 0}
+>
+  Add to bag
+</button>
             </div>
           </div>
         </div>

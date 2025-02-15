@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { setSearchTerm } from "@/lib/store/productSlice";
 import { useEffect, useState } from "react";
-
 import axios from "axios";
+
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -38,8 +38,20 @@ export default function Home() {
     <>
       <div className="flex items-center justify-center flex-col w-full gap-10">
         {/* Hero Section */}
-        <div className="flex items-center justify-start bg-[url(/360.jpg)] bg-cover p-2 w-full h-screen"></div>
-
+  
+      <div className="grid grid-cols-2 gap-6  items-center justify-center p-10">
+      <Link href={"/adidas"}>
+       <div
+          className="border hover:-translate-x-3 transition-all duration-200 hover:shadow-lg"
+        >
+          <img src="./adidasbrand.jpg" alt="Adidas" height={500} width={500} />
+        </div></Link> 
+       <Link href={"/men"}><div
+          className="border hover:translate-x-3 transition-all duration-200 hover:shadow-blue-300 hover:shadow-lg"
+        >
+          <img src="brandnike.jpg" alt="Nike" height={500} width={500} />
+        </div></Link>
+      </div>
         {/* Intro Section */}
         <div className="flex justify-center flex-col w-full">
           <div className="hover:translate-x-6 transition-all duration-200">
@@ -64,11 +76,7 @@ export default function Home() {
             <p className="text-2xl">
               The stories are true—the icon gets its first release in a decade
             </p>
-            <Link href="/newcollection">
-              <button className="m-2 px-4 py-1.5 bg-black rounded-full text-white font-bold hover:bg-gray-500">
-                Shop AJ11 Collection
-              </button>
-            </Link>
+            <button className="bg-black rounded-full text-white px-4 py-1.5 font-semibold "> discover the lifestyle  </button>
           </div>
 
           {/* Subtext */}
@@ -89,7 +97,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-70 transition-all duration-300"></div>
               <div className="absolute inset-0 flex justify-center items-center opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <Link href={`/shopping?search=${NikeAirForce}`}>
+                <Link href={`/shopping?search=${searchTerm}`}>
                   <button
                     onClick={() => handleViewCollection("Nike Air Force")}
                     className="bg-white text-black px-4 py-2 rounded-lg font-semibold shadow-lg hover:bg-gray-300"
@@ -109,7 +117,7 @@ export default function Home() {
               />
               <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-70 transition-all duration-300"></div>
               <div className="absolute inset-0 flex justify-center items-center opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-                <Link href={`/shopping?search=Adidas%20Superstar`}>
+                <Link href={`/shopping?search=${searchTerm}`}>
                   <button
                     onClick={() => handleViewCollection("Adidas Superstar")}
                     className="bg-white text-black px-4 py-2 rounded-lg font-semibold shadow-lg hover:bg-gray-300"

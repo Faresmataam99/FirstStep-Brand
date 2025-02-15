@@ -1,73 +1,85 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+// Initial state with an empty array of products
 const initialState = {
   products: [],
 };
+
 export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
+    // Add product to the cart
     addToCart: (state, action) => {
+      const { product, selectedSize,selectedQuantity } = action.payload; // Get product and selected size from the payload
+      
+      // Check if the product with the selected size already exists in the cart
       const index = state.products.findIndex(
-        (product) => product.product.id == action.payload.id,
-        (product) =>product.product.size == action.payload.id,
+        (item) =>
+          item.product.id === product.id &&
+          item.selectedSize === selectedSize &&
+          item.selectedQuantity === selectedQuantity
       );
-      if (index != -1) {
+      
+
+      // If the product with the selected size is found, increase the stock
+      if (index !== -1) {
         state.products[index].stock++;
       } else {
+        // Otherwise, add the new product with the selected size to the cart
         state.products.push({
-          product: action.payload,
-          stock: 1,
+          product,
+          selectedSize,
+          selectedQuantity,
+          stock: 1, 
         });
       }
+
+      // Update the local storage whenever the cart changes
       updateLocalStorage(state.products);
     },
 
+    // Remove product from the cart
     removeFromCart: (state, action) => {
-      if (state.products[action.payload].stock > 1) {
-        state.products[action.payload].stock--;
+      const index = action.payload;
+      if (state.products[index].stock > 1) {
+        state.products[index].stock--;
       } else {
-        state.products.splice(action.payload, 1);
+        state.products.splice(index, 1);
       }
+
+      // Update local storage after removal
       updateLocalStorage(state.products);
     },
+
+    // Empty the entire cart
     emptyCart: (state) => {
-      (state.products = []), updateLocalStorage(state.products);
-    },
-    setProducts: (state, action) => {
-      state.products = action.payload;
-    },
-    addTowishList: (state, action) => {
-      const index = state.products.findIndex(
-        (product) => product.product.id === action.payload.id,
-        state.products.push({
-          product: action.payload,
-          stock: 1,
-        })
-      );
+      state.products = [];
       updateLocalStorage(state.products);
     },
 
-    cartCount: (state, action) => {
-      updateLocalStorage(state.products);
-    },
-
+    // Set the cart products from local storage or any other source
     setProducts: (state, action) => {
       state.products = action.payload;
     },
+
+    // This action doesn't seem to be used anywhere, so we can remove it.
+    // cartCount: (state, action) => {
+    //   updateLocalStorage(state.products);
+    // },
   },
 });
 
+// Update the local storage with the current cart state
 const updateLocalStorage = (products) => {
-  localStorage.removeItem("products"),
-    localStorage.setItem("products", JSON.stringify(products));
+  localStorage.setItem("products", JSON.stringify(products));
 };
 
 export const {
   addToCart,
   removeFromCart,
   emptyCart,
-  reduceQuantity,
   setProducts,
 } = cartSlice.actions;
+
 export default cartSlice.reducer;

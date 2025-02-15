@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import axios from "axios";
 import{  Router , useRouter } from "next/router";  
+import { useDispatch, useSelector } from "react-redux";
 
 export default () => {
   const [products, setProducts] = useState([]);
@@ -18,6 +19,11 @@ export default () => {
   const [brand, setBrand] = useState('');
   const [addedProduct, setAddedProduct] = useState(false);  // State to track if product is added
   const fileInputRef = useRef(null); // Reference for the file input
+
+  const dispatch=useDispatch()
+  const user = useSelector((state)=>state.user.user)
+  const isAdmin= useSelector((state)=>state.user.isAdmin)
+
 
   const submit = async (e) => {
 
@@ -63,8 +69,12 @@ export default () => {
   };
 
   return (
+
     <>
-      <div className="flex items-center justify-center p-20">
+    {
+      user.isAdmin ?(
+
+      <div className="flex items-center justify-center p-20 flex-col">
         {/* Success Message */}
       {addedProduct && (
         <div className="flex flex-col gap-2 w-60 sm:w-72 text-[10px] sm:text-xs z-50">
@@ -284,7 +294,12 @@ export default () => {
         </div>
       </div>
 
-      
+):(
+  <div className="w-screen h-screen items-center justify-center ">
+    <p className="font-lg text-2xl">not Allowed</p>
+  </div>
+)
+}
     </>
   );
 };

@@ -1,13 +1,8 @@
 "use client"
 
-export default ()=>{
-  useEffect(()=>{
-    try{
+import { useEffect } from "react"
 
-    }catch(e){
-      
-    }
-  })
+export default ()=>{
     return(
         <>
         <div className="grid grid-cols-3 gap-6 p-10">
@@ -29,7 +24,7 @@ export default ()=>{
       <div className="mt-8">
         <p>
           <span className="text-5xl font-light tracking-tight text-black">
-            15£
+            900 DZD
           </span>
           <span className="text-base font-medium text-gray-500"> /mo </span>
         </p>
@@ -42,7 +37,7 @@ export default ()=>{
       className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
       href="#"
     >
-      Get started
+      Get Membership
     </a>
   </div>
 </div>
@@ -67,7 +62,7 @@ export default ()=>{
       <div className="mt-6">
         <p>
           <span className="text-5xl font-light tracking-tight text-black">
-            25£
+            2000 DZD
           </span>
           <span className="text-base font-medium text-gray-500"> /mo </span>
         </p>
@@ -80,7 +75,7 @@ export default ()=>{
       className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
       href="#"
     >
-      Get started
+      Get Membership
     </a>
   </div>
 </div>
@@ -105,7 +100,7 @@ export default ()=>{
       <div className="mt-6">
         <p>
           <span className="text-5xl font-light tracking-tight text-black">
-            30£
+            3000 DZD
           </span>
           <span className="text-base font-medium text-gray-500"> /mo </span>
         </p>
@@ -118,11 +113,10 @@ export default ()=>{
       className="flex items-center justify-center w-full px-6 py-2.5 text-center text-white duration-200 bg-black border-2 border-black rounded-full nline-flex hover:bg-transparent hover:border-black hover:text-black focus:outline-none focus-visible:outline-black text-sm focus-visible:ring-black"
       href="#"
     >
-      Get started
+Get Membership
     </a>
   </div>
 </div>
-
 </div>
         
         </>

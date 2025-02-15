@@ -77,27 +77,17 @@ export default function Dashboard() {
               <img src="adidas.png" alt="Adidas" height={50} width={50} />
               <p className="font-semibold">Adidas</p>
             </div>
-            {/* New Balance */}
-            <div className="flex items-center flex-col hover:bg-orange-200 rounded-lg p-3">
-              <img
-                src="https://w7.pngwing.com/pngs/340/831/png-transparent-new-balance-sneakers-shoe-adidas-logo-new-balance-text-converse-store.png"
-                alt="New Balance"
-                height={50}
-                width={50}
-              />
-              <p className="font-semibold">New Balance</p>
-            </div>
           </div>
         </div>
 
         {/* Properties Panel */}
         <div className="flex gap-6 flex-col w-full">
           <div className="flex gap-10 w-full items-center justify-center p-4 ">
-            <div className="rounded-lg gap-4 transition-all duration-200 bg-gray-200 px-6 flex items-center hover:bg-orange-200 py-2">
+           <div className="rounded-lg gap-4 transition-all duration-200 bg-gray-200 px-6 flex items-center hover:bg-orange-200 py-2">
               <img src="bag.png" height={40} width={40} alt="Transactions" />
               <div className="flex flex-col items-center gap-3">
-                <p className="font-semibold">Transactions</p>
-                <span>15.000 £</span>
+                <p className="font-semibold">Orders</p>
+                <span>{orders.length}</span>
               </div>
             </div>
 
@@ -123,24 +113,24 @@ export default function Dashboard() {
             <p className="font-semibold text-lg m-3">Key Performance Indicators</p>
             <div className="flex gap-10 items-center justify-center w-full">
               <div className="rounded-lg px-4 py-2 bg-gray-200 hover:bg-orange-200 transition">
-                <p className="text-gray-500 font-semibold">Revenue</p>
-                <span>40,000.05 £</span>
+                <p className=" font-semibold">Revenue</p>
+                <span>40,000.05 DZD</span>
               </div>
-              <div className="rounded-lg px-4 py-2 hover:bg-orange-200 transition">
+              <div className="rounded-lg px-4 py-2 bg-gray-200 hover:bg-orange-200 transition">
                 <p className="font-semibold">Net</p>
-                <span>300,000 £</span>
+                <span>300,000 DZD</span>
               </div>
               <div className="bg-gray-200 rounded-lg px-4 py-2 hover:bg-orange-200 transition">
                 <p className="font-semibold">Pending Orders</p>
-                <span>300,000.98 £</span>
+                <span>300,000.98 DZD</span>
               </div>
               <div className="rounded-lg px-4 py-2 bg-gray-200 hover:bg-orange-200 transition">
                 <p className="font-semibold">Due</p>
-                <span>70,000.9 £</span>
+                <span>70,000.9 DZD</span>
               </div>
               <div className="bg-gray-200 px-4 py-2 rounded-lg hover:bg-orange-200 transition">
                 <p className="font-semibold">Overdue</p>
-                <span>49,000.00 £</span>
+                <span>49,000.00 DZD</span>
               </div>
             </div>
           </div>
@@ -153,7 +143,9 @@ export default function Dashboard() {
         </div>
       </div>
       ):(
-        <p>Not found</p>
+        <div className="w-screen h-screen flex items-center justify-center">
+        <p className="text-red-500 text-3xl">Not found</p>
+        </div>
       )
     }
     </>

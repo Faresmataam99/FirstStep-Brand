@@ -81,9 +81,9 @@ export default function Home() {
 
 {/* image side */}
 <div className="flex items-center justify-center">
-<img src="twowomenad.jpg" alt="" className="w-screen object-cover relative" />
+<img src="twowomenad.jpg" alt="" className="w-screen h-screen object-cover relative" />
 <div className="flex flex-col">
-<p className="font-bold text-6xl  "> originals never fade</p>
+<p className="font-bold text-6xl absolute "> originals never fade</p>
 </div>
 </div>
 {/* image side */}

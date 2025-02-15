@@ -2,7 +2,7 @@ import {configureStore} from "@reduxjs/toolkit"
 import {userSlice} from './store/userSlice'
 import {cartSlice} from "./store/cartSlice"
 import {productSlice} from "./store/productSlice"
-import ordersSlice from "./store/ordersSlice"
+import {ordersSlice }from "./store/ordersSlice"
 
 
 export default ()=>{
@@ -11,7 +11,7 @@ export default ()=>{
         user:userSlice.reducer,
         cart:cartSlice.reducer,
         product:productSlice.reducer,
-        orders:ordersSlice.reducer
+        orders:ordersSlice.reducer,
     }
     })
 }
