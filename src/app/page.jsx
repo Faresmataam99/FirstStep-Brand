@@ -8,8 +8,8 @@ import axios from "axios";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const searchTerm = useSelector((state) => state.product.searchTerm); // Get searchTerm from Redux store
-
+const [searchTerm,setSearchTerm]=useState('')
+const [brand,setBrand]=useState('')
   const [products, setProducts] = useState([]);
 
   // Fetch products based on search term
@@ -17,7 +17,7 @@ export default function Home() {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/products?search=${searchTerm}`
+          `http://localhost:5000/products?title=${searchTerm}`
         );
         setProducts(response.data);
       } catch (error) {
@@ -39,19 +39,6 @@ export default function Home() {
       <div className="flex items-center justify-center flex-col w-full gap-10">
         {/* Hero Section */}
   
-      <div className="grid grid-cols-2 gap-6  items-center justify-center p-10">
-      <Link href={"/adidas"}>
-       <div
-          className="border hover:-translate-x-3 transition-all duration-200 hover:shadow-lg"
-        >
-          <img src="./adidasbrand.jpg" alt="Adidas" height={500} width={500} />
-        </div></Link> 
-       <Link href={"/men"}><div
-          className="border hover:translate-x-3 transition-all duration-200 hover:shadow-blue-300 hover:shadow-lg"
-        >
-          <img src="brandnike.jpg" alt="Nike" height={500} width={500} />
-        </div></Link>
-      </div>
         {/* Intro Section */}
         <div className="flex justify-center flex-col w-full">
           <div className="hover:translate-x-6 transition-all duration-200">
@@ -78,6 +65,22 @@ export default function Home() {
             </p>
             <button className="bg-black rounded-full text-white px-4 py-1.5 font-semibold "> discover the lifestyle  </button>
           </div>
+          <div className="mt-7 font-bold ">
+<p className=""> Browse you favourite brand </p>
+          </div>
+          <div className="grid grid-cols-2 gap-6 m-10  items-center justify-center p-10">
+      <Link href={"/adidas"}>
+       <div
+          className="border hover:-translate-x-3 transition-all duration-200 hover:shadow-lg"
+        >
+          <img src="./adidasbrand.jpg" alt="Adidas" height={500} width={500} />
+        </div></Link> 
+       <Link href={"/men"}><div
+          className="border hover:translate-x-3 transition-all duration-200 hover:shadow-blue-300 hover:shadow-lg"
+        >
+          <img src="brandnike.jpg" alt="Nike" height={500} width={500} />
+        </div></Link>
+      </div>
 
           {/* Subtext */}
           <div className="flex flex-col text-center justify-center items-center mb-1.5 mt-8">
