@@ -1,17 +1,26 @@
-"use client";
+"use client"
 
-import { useEffect, useRef, useState } from "react";
-import { MapContainer, TileLayer, Marker, Popup, Polygon } from "react-leaflet";
-import { useMapEvents } from "react-leaflet";
+import dynamic from 'next/dynamic';
+
+// Dynamically import MapContainer and other Leaflet components
+const MapContainerWithNoSSR = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
+const TileLayer = dynamic(() => import("react-leaflet").then((mod) => mod.TileLayer), { ssr: false });
+const Marker = dynamic(() => import("react-leaflet").then((mod) => mod.Marker), { ssr: false });
+const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), { ssr: false });
+const Polygon = dynamic(() => import("react-leaflet").then((mod) => mod.Polygon), { ssr: false });
+const useMapEvents = dynamic(() => import("react-leaflet").then((mod) => mod.useMapEvents), { ssr: false });
+
 import "leaflet/dist/leaflet.css"; // Import Leaflet CSS
 
-// Some example coordinates for Algerian territories (e.g., Algiers)
+import { useEffect, useState } from "react";
+
 const algeriaTerritory = [
   [36.75, 3.06], // Algiers
   [36.77, 3.08],
   [36.78, 3.07],
   [36.76, 3.05],
 ];
+
 
 export default function StoreLocator() {
   const [location, setLocation] = useState("");
@@ -25,14 +34,13 @@ export default function StoreLocator() {
   };
 
   const LocationSearchBox = () => {
-    const map = useMapEvents({
+    useMapEvents({
       click: onMapClick,
     });
 
     useEffect(() => {
       if (location) {
         // Simulate a location search (we can implement actual geocoding here)
-        // For now, we just update the map to the provided location coordinates (Algiers as default)
         setMapCenter([36.75, 3.06]);
         setZoom(14);
       }
@@ -62,7 +70,7 @@ export default function StoreLocator() {
       </div>
 
       {/* Leaflet Map */}
-      <MapContainer
+      <MapContainerWithNoSSR
         center={mapCenter}
         zoom={zoom}
         scrollWheelZoom={false}
@@ -78,14 +86,14 @@ export default function StoreLocator() {
         <Marker position={mapCenter}>
           <Popup>Brand zone Store in Algiers</Popup>
         </Marker>
-
+        
         {/* Example Territory (Polygon) for Algeria */}
         <Polygon positions={algeriaTerritory} color="blue" weight={2}>
           <Popup>Algiers Territory</Popup>
         </Polygon>
-
+        
         <LocationSearchBox /> {/* Search Box for interacting with the map */}
-      </MapContainer>
+      </MapContainerWithNoSSR>
     </div>
   );
 }

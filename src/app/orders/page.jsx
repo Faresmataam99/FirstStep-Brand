@@ -132,27 +132,40 @@ export default () => {
 
       {/* Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-30 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg text-center">
-            <div className="flex items-center justify-center gap-4">
-              <img src="carte-de-credit.png" alt="" height={30} width={30} />
-              <span>Total Price</span>
-            </div>
-            <div>
-              <input
-                type="password"
-                placeholder="*********"
-                className="rounded-full p-2 w-72 bg-gray-200"
-              />
-            </div>
-            <div className="flex items-center gap-4">
-              <p className="mt-4 font-semibold text-green-300">Order confirmed</p>
-              <p className="font-semibold">Quick and trusted Delivery</p>
-              <img src="dhl.png" alt="" height={50} width={50} className="my-4" />
-             <Link href={"/"}> <button className="rounded-full bg-black text-white px-6 py-2">Confirm Payment</button></Link>
-            </div>
-          </div>
-        </div>
+     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-30">
+     <div className="modal w-fit h-fit bg-white shadow-[0px_187px_75px_rgba(0,0,0,0.01),0px_105px_63px_rgba(0,0,0,0.05),0px_47px_47px_rgba(0,0,0,0.09),0px_12px_26px_rgba(0,0,0,0.1),0px_0px_0px_rgba(0,0,0,0.1)] rounded-[26px] max-w-[450px] p-5">
+         <form className="form flex flex-col gap-5">
+             <div className="payment--options w-full grid grid-cols-3 gap-5 p-2.5">
+                 <button className="h-[55px] bg-gray-200 rounded-[11px] flex items-center justify-center border-0 outline-none">
+                     <img src="apple.png" alt="Apple" height={20} width={20} />
+                 </button>
+                 <button className="h-[55px] bg-gray-200 rounded-[11px] flex items-center justify-center border-0 outline-none">
+                     <img src="google.png" alt="Google" height={20} width={20}/>
+                 </button>
+                 <button className="h-[55px] bg-gray-200 rounded-[11px] flex items-center justify-center border-0 outline-none">
+<img src="visa.png" alt="" height={20} width={20} />
+                 </button>
+             </div>
+             <div className="separator w-full grid grid-cols-[1fr_2fr_1fr] gap-2.5 text-gray-500">
+                 <p className="break-keep block text-center font-semibold text-[11px] m-auto">OR</p>
+                 <span className="line inline-block w-full h-[1px] bg-gray-300 m-auto"></span>
+             </div>
+             <div className="credit-card-info--form flex flex-col gap-4">
+                 <div className="input_container w-full flex flex-col gap-[5px]">
+                     <label className="input_label text-[10px] text-gray-500 font-semibold">Card Number</label>
+                     <input type="text" class="input_field w-auto h-[40px] px-4 rounded-[9px] outline-none bg-gray-200 border border-transparent transition-all focus:border-transparent focus:shadow-[0px_0px_0px_2px_#242424] focus:bg-transparent" />
+                 </div>
+                 <div className="split grid grid-cols-[4fr_2fr] gap-4">
+                     <input type="text" class="w-full" placeholder="MM/YY" />
+                     <input type="text" class="w-full" placeholder="CVC" />
+                 </div>
+             </div>
+            <Link href={"/"}> <button className="rounded-lg w-full bg-black text-white px-4 py-2 hover:bg-gray-500 transition-all duration-200">
+                 Purchase
+             </button></Link>
+         </form>
+     </div>
+ </div> 
       )}
     </>
   );

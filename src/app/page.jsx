@@ -38,8 +38,6 @@ const [brand,setBrand]=useState('')
     <>
       <div className="flex items-center justify-center flex-col w-full gap-10">
         {/* Hero Section */}
-  
-        {/* Intro Section */}
         <div className="flex justify-center flex-col w-full">
           <div className="hover:translate-x-6 transition-all duration-200">
             <p className="text-4xl font-bold m-3 mb-4">
@@ -65,8 +63,8 @@ const [brand,setBrand]=useState('')
             </p>
             <button className="bg-black rounded-full text-white px-4 py-1.5 font-semibold "> discover the lifestyle  </button>
           </div>
-          <div className="mt-7 font-bold ">
-<p className=""> Browse you favourite brand </p>
+          <div className="mt-10 flex justify-center items-center ">
+<p className="text-4xl font-semibold"> Browse your favourite brand </p>
           </div>
           <div className="grid grid-cols-2 gap-6 m-10  items-center justify-center p-10">
       <Link href={"/adidas"}>

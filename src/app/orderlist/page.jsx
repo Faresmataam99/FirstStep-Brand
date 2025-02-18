@@ -59,7 +59,6 @@ export default function OrdersPage() {
 
     const labels = Object.keys(orderCounts);
     const data = Object.values(orderCounts);
-
     return {
       labels: labels,
       datasets: [

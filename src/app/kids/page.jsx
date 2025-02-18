@@ -55,26 +55,25 @@ export default ()=>{
 <div className="mt-20 flex items-center justify-center gap-6 flex-col text-center">
   <h1 className="text-xl font-semibold"> Explore the collections for your kids <br />
   and suit them perfectly </h1> 
-  <button className="bg-black text-white ">buy the looks</button>
+  <button className="bg-black text-white px-6 py-2 text-lg rounded-full ">buy the looks</button>
 </div>
-
 
             <div className="grid grid-cols-3 gap-10 p-24">
                 {/* first grid item */}
-                <div onChange={kidscloths} className="flex items-center flex-col gap-4 hover:shadow-lg border">
+                <Link href={"/shopping"}><div onChange={kidscloths} className="flex items-center flex-col gap-4 hover:shadow-lg border">
                     <img src="https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/2cb7f435-c51b-4980-94b3-279f9a61c354/NIKE+COSMIC+RUNNER+%28TD%29.png" alt="" className="w-full h-full object-cover" />
                     <button className="bg-black  text-white  transition-all w-full m-3 rounded-full py-2 text-lg  duration-200 hover:bg-gray-800 font-semibold" >Shoes</button>
-                </div>
+                </div></Link>
                 {/* second grid item */}
-                <div onChange={kidsShoes} className="flex items-center justify-center flex-col gap-4 border hover:shadow-lg">
-                    <img src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/304d03ae-6c86-43b8-8d25-c62ea2bd2132/G+NSW+CLUB+FLC+BF+CREW+LS+SHNE.png" alt="" className="w-full h-full object-cover" />
-                    <button className="font-semibold text-lg bg-black w-full text-white rounded-full  m-3 py-2 transition-all duration-200  hover:bg-gray-800 ">Cloths </button>
-                </div>
+                <Link href={"/shopping"}><div onChange={kidscloths} className="flex  items-center flex-col gap-4 hover:shadow-lg border h-full">
+                    <img src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/304d03ae-6c86-43b8-8d25-c62ea2bd2132/G+NSW+CLUB+FLC+BF+CREW+LS+SHNE.png" alt=""  className=" object-cover" />
+                    <button className="bg-black  text-white  transition-all w-full m-3 rounded-full py-2 text-lg  duration-200 hover:bg-gray-800 font-semibold" >Clothes</button>
+                </div></Link>
 {/* third grid item */}
-<div onChange={kidsAccessories} className="flex items-center justify-center flex-col gap-4 hover:shadow-lg border ">
+<Link href={"/shopping"}><div onChange={kidsAccessories} className="flex items-center  flex-col gap-4 hover:shadow-lg border ">
     <img src="orangeback.png" alt="" className="w-full h-full object-cover" />
     <button className="text-lg bg-black rounded-full text-white font-semibold hover:bg-gray-800 m-3 transition-all w-full duration-200 py-2">Accessories</button>
-</div>
+</div></Link>
             </div>
         </div>
         </>

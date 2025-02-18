@@ -90,6 +90,8 @@ export default function AnimatedPage() {
           <Link href="/findastore">
             <li className="hover:text-orange-600 transition">Find a store</li>
           </Link>
+          <Link href={"/help"}>
+          <li>Help</li></Link>
           {isConnected ? (
             <Link href={""}>
               <li className="bg-orange-200 px-4 text-md py-1.5 rounded-full">{user.firstname} {user.lastname}</li>

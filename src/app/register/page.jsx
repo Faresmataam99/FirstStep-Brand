@@ -112,12 +112,6 @@ export default () => {
               placeholder="Password..."
               required
             />
-            <input type="text"
-            
-            
-            
-            />
-
             <button
               type="submit"
               className="px-4 py-1.5 hover:bg-gray-500 duration-200 transition-all bg-black text-white rounded-full"
@@ -125,7 +119,6 @@ export default () => {
               Submit
             </button>
           </motion.form>
-       
           <motion.div
             className="text-2xl font-bold text-center"
             {...swipeAnimation}
