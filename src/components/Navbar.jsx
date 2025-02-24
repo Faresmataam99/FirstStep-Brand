@@ -21,6 +21,7 @@ export default function AnimatedPage() {
   const inputRef = useRef(null);
   const suggestionsRef = useRef(null);
 
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -60,6 +61,8 @@ export default function AnimatedPage() {
       }
     };
 
+
+  
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []); // Empty dependency array to ensure it runs once when component is mounted
@@ -94,7 +97,7 @@ export default function AnimatedPage() {
           <li>Help</li></Link>
           {isConnected ? (
             <Link href={""}>
-              <li className="bg-orange-200 px-4 text-md py-1.5 rounded-full">{user.firstname} {user.lastname}</li>
+              <li className="bg-orange-200 px-4 p-80000 text-md py-1.5 rounded-full">{user.firstname} {user.lastname}</li>
             </Link>
           ) : (
             <Link href="/register">
